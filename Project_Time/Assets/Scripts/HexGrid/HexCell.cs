@@ -1,11 +1,16 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
+using ProjectTime.Build;
 
 namespace ProjectTime.HexGrid
 {
     public class HexCell : MonoBehaviour
     {
         MeshCollider myCollider;
+        bool isAvailable = true;
+        Building currentBuilding = null;
+
+        public bool IsAvailable { get => isAvailable; }
 
         private void Start()
         {
@@ -23,6 +28,21 @@ namespace ProjectTime.HexGrid
         private void OnMouseExit()
         {
             gameObject.layer = 1;
+        }
+
+        public void AddBuilding(Building newBuilding)
+        {
+            if (!isAvailable) { return; }
+            isAvailable = false;
+            currentBuilding = newBuilding;
+        }
+
+        public void RemoveBuilding()
+        {
+            if (isAvailable) { return; }
+            currentBuilding.Remove();
+            currentBuilding = null;
+            isAvailable = true;
         }
     }
 }

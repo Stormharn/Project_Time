@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class OutLineObject : MonoBehaviour
+public class OutlineObject : MonoBehaviour
 {
     public Shader DrawAsSolidColor;
     public Shader Outline;
@@ -13,6 +13,8 @@ public class OutLineObject : MonoBehaviour
     {
         _outlineMaterial = new Material(Outline);
         TempCam = new GameObject().AddComponent<Camera>();
+        TempCam.name = "Outline Camera";
+        TempCam.gameObject.transform.parent = this.transform;
 
         kernel = GaussianKernel.Calculate(5, 21);
     }

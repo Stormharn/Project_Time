@@ -31,6 +31,8 @@ namespace ProjectTime.HexGrid
             position.z = z * (Hex.outerRadius * 1.5f);
 
             HexCell cell = cells[i] = Instantiate<HexCell>(cellPrefab, position, Quaternion.identity, transform);
+            if (position == Vector3.zero)
+                cell.tag = UnityTags.StartBase.ToString();
         }
     }
 }

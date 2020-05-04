@@ -3,5 +3,7 @@ public enum UnityTags
     None,
     Player,
     HexCell,
-    BuildingsParent
+    BuildingsParent,
+    StartBase,
+    ResourceParent
 }

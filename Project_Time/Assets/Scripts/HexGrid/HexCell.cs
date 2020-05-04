@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using ProjectTime.Build;
+using ProjectTime.Resources;
 
 namespace ProjectTime.HexGrid
 {
@@ -8,7 +9,9 @@ namespace ProjectTime.HexGrid
     {
         MeshCollider myCollider;
         bool isAvailable = true;
+        bool hasResource = false;
         Building currentBuilding = null;
+        Resource currentResource = null;
 
         public bool IsAvailable { get => isAvailable; }
 
@@ -43,6 +46,13 @@ namespace ProjectTime.HexGrid
             currentBuilding.Remove();
             currentBuilding = null;
             isAvailable = true;
+        }
+
+        public void AddResource(Resource newResource)
+        {
+            isAvailable = false;
+            hasResource = true;
+            currentResource = newResource;
         }
     }
 }

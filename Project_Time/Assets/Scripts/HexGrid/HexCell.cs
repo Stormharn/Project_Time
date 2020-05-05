@@ -14,6 +14,7 @@ namespace ProjectTime.HexGrid
         Resource currentResource = null;
 
         public bool IsAvailable { get => isAvailable; }
+        public bool HasResource { get => hasResource; }
 
         private void Start()
         {
@@ -53,6 +54,18 @@ namespace ProjectTime.HexGrid
             isAvailable = false;
             hasResource = true;
             currentResource = newResource;
+        }
+
+        public Resource GetResource()
+        {
+            return currentResource;
+        }
+
+        public void RemoveResource()
+        {
+            isAvailable = true;
+            hasResource = false;
+            currentResource = null;
         }
     }
 }

@@ -401,7 +401,7 @@ GameObject:
   - component: {fileID: 728141266}
   - component: {fileID: 728141267}
   m_Layer: 0
-  m_Name: ResourceManager
+  m_Name: ResourceSpawner
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -433,8 +433,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 510562dedc7798247bdd1dc3e03e324c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  resource: {fileID: 3108661865856650221, guid: c6b49f5c7f1c6a44a9fb052e51ea2bac,
-    type: 3}
+  allResourceTypes:
+  - {fileID: 3108661865856650221, guid: c6b49f5c7f1c6a44a9fb052e51ea2bac, type: 3}
 --- !u!1 &770293034
 GameObject:
   m_ObjectHideFlags: 0
@@ -446,7 +446,7 @@ GameObject:
   - component: {fileID: 770293036}
   - component: {fileID: 770293035}
   m_Layer: 0
-  m_Name: BuildingManager
+  m_Name: BuildingSpawner
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -464,8 +464,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fcec4efd8bc2bf54b8faf75868120b5c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentBuilding: {fileID: 2228326958594321189, guid: 35543ef4fc35b294f97a0903d2008dc6,
-    type: 3}
+  allBuildingTypes:
+  - {fileID: 8656939200044312376, guid: 45b8dd93d1f2b544580f9965eb54370e, type: 3}
 --- !u!4 &770293036
 Transform:
   m_ObjectHideFlags: 0
@@ -786,8 +786,8 @@ GameObject:
   - component: {fileID: 1592121387}
   - component: {fileID: 1592121386}
   m_Layer: 0
-  m_Name: Hex Grid
-  m_TagString: Untagged
+  m_Name: Hex Manager
+  m_TagString: HexManager
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

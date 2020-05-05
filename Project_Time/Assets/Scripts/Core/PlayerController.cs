@@ -9,7 +9,7 @@ namespace ProjectTime.Core
     {
         // Declarations
         #region Declarations
-        [SerializeField] BuildingManager buildingManager;
+        [SerializeField] BuildingSpawner buildingManager;
         Camera playerCam;
         #endregion
 

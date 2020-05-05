@@ -8,6 +8,7 @@ TagManager:
   - BuildingsParent
   - StartBase
   - ResourceParent
+  - HexManager
   layers:
   - Default
   - TransparentFX

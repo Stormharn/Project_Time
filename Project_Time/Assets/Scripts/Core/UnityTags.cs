@@ -5,5 +5,6 @@ public enum UnityTags
     HexCell,
     BuildingsParent,
     StartBase,
-    ResourceParent
+    ResourceParent,
+    HexManager
 }

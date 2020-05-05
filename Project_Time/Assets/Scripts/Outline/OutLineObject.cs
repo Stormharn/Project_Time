@@ -9,6 +9,7 @@ public class OutlineObject : MonoBehaviour
     Material _outlineMaterial;
     Camera TempCam;
     float[] kernel;
+
     void Start()
     {
         _outlineMaterial = new Material(Outline);

@@ -80,5 +80,10 @@ namespace ProjectTime.Build
         {
             removeResources.Add(removeResource);
         }
+
+        public override void Cleanup()
+        {
+
+        }
     }
 }

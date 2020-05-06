@@ -2,6 +2,7 @@
 using UnityEngine.UI;
 using ProjectTime.Build;
 using ProjectTime.Resources;
+using ProjectTime.Shielding;
 
 namespace ProjectTime.HexGrid
 {
@@ -10,11 +11,14 @@ namespace ProjectTime.HexGrid
         MeshCollider myCollider;
         bool isAvailable = true;
         bool hasResource = false;
+        bool hasShield = false;
         Building currentBuilding = null;
         Resource currentResource = null;
+        Shield shield = null;
 
         public bool IsAvailable { get => isAvailable; }
         public bool HasResource { get => hasResource; }
+        public bool HasShield { get => hasShield; }
 
         private void Start()
         {
@@ -66,6 +70,23 @@ namespace ProjectTime.HexGrid
             isAvailable = true;
             hasResource = false;
             currentResource = null;
+        }
+
+        public void AddShield(Shield newShield)
+        {
+            hasShield = true;
+            shield = newShield;
+        }
+
+        public void RemoveShield()
+        {
+            hasShield = false;
+            shield = null;
+        }
+
+        public Shield GetShield()
+        {
+            return shield;
         }
     }
 }

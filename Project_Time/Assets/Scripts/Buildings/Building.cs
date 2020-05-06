@@ -3,7 +3,7 @@ using ProjectTime.HexGrid;
 
 namespace ProjectTime.Build
 {
-    public class Building : MonoBehaviour
+    public abstract class Building : MonoBehaviour
     {
         public void Build(Transform buildLocation, Transform parent, HexCell hexCell)
         {
@@ -13,7 +13,10 @@ namespace ProjectTime.Build
 
         public void Remove()
         {
+            Cleanup();
             Destroy(this.gameObject);
         }
+
+        public abstract void Cleanup();
     }
 }

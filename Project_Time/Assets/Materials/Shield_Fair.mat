@@ -116,7 +116,7 @@ Material:
     - _Edgecolor: {r: 0.8784314, g: 0.8664386, b: 0.09411766, a: 0.666}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _Maincolor: {r: 0.41509432, g: 0.377405, b: 0.048949793, a: 0.666}
-    - _Mainpanningspeed: {r: 0, g: 0.3, b: 0.01, a: 0}
+    - _Mainpanningspeed: {r: 0.025, g: 0.05, b: 0.025, a: 1}
     - _Noisespeed: {r: 0, g: 0, b: 0, a: 0}
     - _Secondarycolor: {r: 0.36862746, g: 0.3463912, b: 0.06666666, a: 0}
     - _Secondarypanningspeed: {r: 2, g: 2, b: 0, a: 0}

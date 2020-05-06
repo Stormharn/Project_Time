@@ -9,7 +9,7 @@ namespace ProjectTime.Core
     {
         // Declarations
         #region Declarations
-        [SerializeField] BuildingSpawner buildingManager;
+        [SerializeField] BuildingSpawner buildingSpawner;
         Camera playerCam;
         #endregion
 
@@ -19,15 +19,16 @@ namespace ProjectTime.Core
         {
             playerCam = Camera.main;
         }
+
         private void Update()
         {
             if (Input.GetMouseButtonDown(0))
             {
-                buildingManager.PlaceBuilding(playerCam);
+                buildingSpawner.PlaceBuilding(playerCam);
             }
             else if (Input.GetMouseButtonDown(1))
             {
-                buildingManager.RemoveBuilding(playerCam);
+                buildingSpawner.RemoveBuilding(playerCam);
             }
         }
         #endregion

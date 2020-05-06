@@ -17,10 +17,6 @@ namespace ProjectTime.Build
 
         // Unity Methods
         #region Unity Methods
-        #endregion
-
-        // Public Methods
-        #region Public Methods
         private void Awake()
         {
             foreach (var building in allBuildingTypes)
@@ -30,6 +26,10 @@ namespace ProjectTime.Build
             buildingsParent = GameObject.FindGameObjectWithTag(UnityTags.BuildingsParent.ToString()).transform;
             currentBuilding = availableBuildingTypes[0];
         }
+        #endregion
+
+        // Public Methods
+        #region Public Methods
         #endregion
 
         // Private Methods
@@ -44,7 +44,8 @@ namespace ProjectTime.Build
 
                 if (hexCell.IsAvailable)
                 {
-                    currentBuilding.Build(hit.transform, buildingsParent, hexCell);
+                    if (currentBuilding)
+                        currentBuilding.Build(hit.transform, buildingsParent, hexCell);
                 }
             }
         }
@@ -57,7 +58,7 @@ namespace ProjectTime.Build
                 var hexCell = hit.transform.GetComponent<HexCell>();
                 if (hexCell == null) { return; }
 
-                if (!hexCell.IsAvailable)
+                if (!hexCell.IsAvailable && !hexCell.HasResource)
                 {
                     hexCell.RemoveBuilding();
                 }

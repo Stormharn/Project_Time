@@ -57,7 +57,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f19b1986d8c79124f93cf68f184ecf83, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  shield: {fileID: 3560191464833158477, guid: 264a053b861312a4db33c19aa03628a6, type: 3}
+  goodShieldPrefab: {fileID: 3560191464833158477, guid: 264a053b861312a4db33c19aa03628a6,
+    type: 3}
+  fairShieldPrefab: {fileID: 3560191464833158477, guid: 096bf0eef5175144abbaa17f62fb8423,
+    type: 3}
+  lowShieldPrefab: {fileID: 3560191464833158477, guid: f699f7e6741c91a479db01837f3ca99c,
+    type: 3}
 --- !u!1 &2688662940576650093
 GameObject:
   m_ObjectHideFlags: 0
@@ -84,8 +89,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2688662940576650093}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 5, z: 0}
-  m_LocalScale: {x: 10, y: 10, z: 10}
+  m_LocalPosition: {x: 0, y: 2.5, z: 0}
+  m_LocalScale: {x: 5, y: 5, z: 5}
   m_Children: []
   m_Father: {fileID: 868580360150662153}
   m_RootOrder: 0

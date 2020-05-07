@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 3560191464833158477}
   - component: {fileID: 6788008776869913633}
   m_Layer: 0
-  m_Name: Shield
+  m_Name: Shield_Good
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -93,12 +93,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: db0c8cb95a9e1714ab87568032f4a0d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  shieldLevel1Material: {fileID: 2100000, guid: b43c21b575d048d44b4ee4aaa1f1e3ca,
-    type: 2}
-  shieldLevel2Material: {fileID: 2100000, guid: fabede74e8e27fb4eb03fd01c583acbf,
-    type: 2}
-  shieldLevel3Material: {fileID: 2100000, guid: 765ca60362fd6e64a9528b7a1ad384f3,
-    type: 2}
+  baseShieldStrength: 100
 --- !u!114 &6788008776869913633
 MonoBehaviour:
   m_ObjectHideFlags: 0

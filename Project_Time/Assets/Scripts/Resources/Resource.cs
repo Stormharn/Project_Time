@@ -1,6 +1,7 @@
 using System;
 using ProjectTime.HexGrid;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace ProjectTime.Resources
 {
@@ -9,9 +10,12 @@ namespace ProjectTime.Resources
         [SerializeField] ResourceTypes resourceType;
         [SerializeField] float resourceAmount = 100f;
         [SerializeField] float gatherAmount = 10f;
+        [SerializeField] Image resourceUI;
         HexCell myHexCell = null;
 
         public ResourceTypes ResourceType { get => resourceType; }
+        public Image ResourceUI { get => resourceUI; }
+
         public event Action<Resource> onResourceEmpty;
 
         public void Spawn(Transform resourceLocation, Transform parent, HexCell hexCell)

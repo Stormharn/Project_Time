@@ -57,12 +57,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f19b1986d8c79124f93cf68f184ecf83, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  buildingName: Shield Generator
+  maxIntergity: 500
+  hasPower: 0
+  isPowered: 1
   goodShieldPrefab: {fileID: 3560191464833158477, guid: 264a053b861312a4db33c19aa03628a6,
     type: 3}
   fairShieldPrefab: {fileID: 3560191464833158477, guid: 096bf0eef5175144abbaa17f62fb8423,
     type: 3}
   lowShieldPrefab: {fileID: 3560191464833158477, guid: f699f7e6741c91a479db01837f3ca99c,
     type: 3}
+  shieldRegenDelay: 20
 --- !u!1 &2688662940576650093
 GameObject:
   m_ObjectHideFlags: 0

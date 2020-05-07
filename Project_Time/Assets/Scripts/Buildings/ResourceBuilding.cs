@@ -20,9 +20,16 @@ namespace ProjectTime.Build
         List<HexCell> cellsInRange = new List<HexCell>();
         float gatherRange;
         WaitForSeconds gatherDelay = new WaitForSeconds(10f);
+        ResourceManager resourceManager;
+
+        public float CurrentResourceAmount { get => currentResourceAmount; }
+        public float ResourceCapacity { get => resourceCapacity; }
+        public ResourceTypes ResourceType { get => resourceType; }
 
         private void Start()
         {
+            resourceManager = GameObject.FindObjectOfType<ResourceManager>();
+            resourceManager.UpdateBuildings();
             gatherRange = (Hex.innerRadius * 2 * gatherRangeInHexes) + 1f;
             FindNearbyResources();
             StartCoroutine(nameof(GatherResources));
@@ -56,6 +63,7 @@ namespace ProjectTime.Build
         {
             while (true)
             {
+                yield return gatherDelay;
                 if (gatherableResources.Count > 0)
                 {
                     foreach (var resource in removeResources)
@@ -69,10 +77,10 @@ namespace ProjectTime.Build
                         {
                             var gathered = resource.Gather(gatherRate);
                             currentResourceAmount += gathered;
+                            resourceManager.UpdateResources();
                         }
                     }
                 }
-                yield return gatherDelay;
             }
         }
 

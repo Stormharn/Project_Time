@@ -58,7 +58,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 26c83ba0106f8cd43abd511613861254, type: 2}
+  - {fileID: 2100000, guid: e05862368c906d54fbb3753b7901f190, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -91,7 +91,7 @@ GameObject:
   - component: {fileID: 2698952983634629547}
   - component: {fileID: 8656939200044312376}
   m_Layer: 0
-  m_Name: ResourceBuilding
+  m_Name: SteelGatherer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -136,8 +136,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c52fe02e1cf31a64cbff1872df3ed3c9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  resourceType: 0
+  buildingName: Steel Gatherer
+  maxIntergity: 300
+  hasPower: 0
+  isPowered: 1
+  buildingUI: {fileID: 3544096322446356851, guid: 13c5d506f64e7f34bb890a532bbff3e0,
+    type: 3}
+  resourceType: 1
   currentResourceAmount: 0
-  resourceCapacity: 1000
+  resourceCapacity: 10000
   gatherRangeInHexes: 1
   gatherRate: 3

@@ -6,5 +6,7 @@ public enum UnityTags
     BuildingsParent,
     StartBase,
     ResourceParent,
-    HexManager
+    HexManager,
+    ResourceBuildingUI,
+    MainUI
 }

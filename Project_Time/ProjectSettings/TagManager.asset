@@ -9,6 +9,8 @@ TagManager:
   - StartBase
   - ResourceParent
   - HexManager
+  - ResourceBuildingUI
+  - MainUI
   layers:
   - Default
   - TransparentFX

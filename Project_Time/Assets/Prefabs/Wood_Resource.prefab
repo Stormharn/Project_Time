@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 3108661865856650220}
   - component: {fileID: 3108661865856650221}
   m_Layer: 0
-  m_Name: Resource
+  m_Name: Wood_Resource
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -47,6 +47,7 @@ MonoBehaviour:
   resourceType: 0
   resourceAmount: 100
   gatherAmount: 10
+  resourceUI: {fileID: 0}
 --- !u!1 &3108661866980583277
 GameObject:
   m_ObjectHideFlags: 0
@@ -58,6 +59,7 @@ GameObject:
   - component: {fileID: 3108661866980583276}
   - component: {fileID: 3108661866980583314}
   - component: {fileID: 3108661866980583315}
+  - component: {fileID: 3544082471409669736}
   m_Layer: 0
   m_Name: Resource Text
   m_TagString: Untagged
@@ -126,7 +128,7 @@ TextMesh:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3108661866980583277}
-  m_Text: 'Resource
+  m_Text: 'Wood
 
     ||
 
@@ -144,3 +146,15 @@ TextMesh:
   m_Color:
     serializedVersion: 2
     rgba: 4294967295
+--- !u!114 &3544082471409669736
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3108661866980583277}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6daa0801f962b214e90da998c41974bd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

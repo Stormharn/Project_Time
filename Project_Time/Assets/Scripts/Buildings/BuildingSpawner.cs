@@ -9,22 +9,17 @@ namespace ProjectTime.Build
     {
         // Declarations
         #region Declarations
-        [SerializeField] Building[] allBuildingTypes;
-        List<Building> availableBuildingTypes = new List<Building>();
         Building currentBuilding = null;
         Transform buildingsParent;
+
+        public Building CurrentBuilding { get => currentBuilding; }
         #endregion
 
         // Unity Methods
         #region Unity Methods
         private void Awake()
         {
-            foreach (var building in allBuildingTypes)
-            {
-                availableBuildingTypes.Add(building);
-            }
             buildingsParent = GameObject.FindGameObjectWithTag(UnityTags.BuildingsParent.ToString()).transform;
-            currentBuilding = availableBuildingTypes[0];
         }
         #endregion
 
@@ -63,6 +58,16 @@ namespace ProjectTime.Build
                     hexCell.RemoveBuilding();
                 }
             }
+        }
+
+        public void SelectBuildingType(Building newBuildingType)
+        {
+            currentBuilding = newBuildingType;
+        }
+
+        public void StopBuilding()
+        {
+            currentBuilding = null;
         }
         #endregion
     }

@@ -31,9 +31,9 @@ namespace ProjectTime.Resources
             var hexCells = GameObject.FindGameObjectsWithTag(UnityTags.HexCell.ToString());
             foreach (var gObject in hexCells)
             {
-                if (Random.Range(1f, 100f) < 10)
+                if (Random.Range(1f, 100f) < 20)
                 {
-                    curResource = resourceTypes[Random.Range(0, resourceTypes.Count - 1)];
+                    curResource = resourceTypes[Random.Range(0, resourceTypes.Count)];
                     var hexCell = gObject.GetComponent<HexCell>();
                     curResource.Spawn(hexCell.transform, resourceParent, hexCell);
                 }

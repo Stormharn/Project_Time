@@ -34,6 +34,7 @@ namespace ProjectTime.HexGrid
             HexCell cell = cells[i] = Instantiate<HexCell>(cellPrefab, position, Quaternion.identity, transform);
             if (position == Vector3.zero)
                 cell.tag = UnityTags.StartBase.ToString();
+            cell.PowerUp(); //TODO remove this code - only for testing
         }
 
         public List<HexCell> NearestCells(Vector3 position, float range)
@@ -46,6 +47,19 @@ namespace ProjectTime.HexGrid
                     list.Add(cell);
             }
             return list;
+        }
+
+        public HexCell ClosestCell(Vector3 position)
+        {
+            HexCell closest = null;
+            float closestDistance = Mathf.Infinity;
+            foreach (var cell in cells)
+            {
+                var distance = Vector3.Distance(cell.transform.position, position);
+                if (distance < closestDistance)
+                    closest = cell;
+            }
+            return closest;
         }
     }
 }

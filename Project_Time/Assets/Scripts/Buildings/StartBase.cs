@@ -2,21 +2,24 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using ProjectTime.HexGrid;
+using ProjectTime.Shielding;
 using UnityEngine;
 
 namespace ProjectTime.Build
 {
-    public class StartBase : Building
+    public class StartBase : ShieldGenerator
     {
         public override void Cleanup()
         {
 
         }
 
-        private void Start()
+        private new void Start()
         {
-            var hexCell = GameObject.FindGameObjectWithTag(UnityTags.StartBase.ToString()).GetComponent<HexCell>();
-            hexCell.AddBuilding(this);
+            myCell = GameObject.FindObjectOfType<HexManager>().ClosestCell(transform.position);
+            myCell.AddBuilding(this);
+            myCell.PowerUp();
+            base.Start();
         }
     }
 }

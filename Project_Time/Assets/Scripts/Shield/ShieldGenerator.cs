@@ -2,6 +2,7 @@ using UnityEngine;
 using ProjectTime.HexGrid;
 using ProjectTime.Build;
 using System.Collections.Generic;
+using System.Collections;
 using System;
 
 namespace ProjectTime.Shielding
@@ -11,10 +12,15 @@ namespace ProjectTime.Shielding
         [SerializeField] Shield goodShieldPrefab;
         [SerializeField] Shield fairShieldPrefab;
         [SerializeField] Shield lowShieldPrefab;
+        [SerializeField] float shieldRegenDelay = 20f;
         List<HexCell> cellsInRange = new List<HexCell>();
         int shieldLevel = 1;
+        WaitForSeconds regenTime;
+        HexManager hexManager;
+
 
         public event Action onRemoveShield;
+        public event Action onPeriodicRegen;
 
         private void OnEnable()
         {
@@ -27,16 +33,33 @@ namespace ProjectTime.Shielding
             GameObject.FindObjectOfType<ShieldManager>().TriggerRegen();
         }
 
-        public void Start()
+        private void Awake()
+        {
+            hexManager = GameObject.FindGameObjectWithTag(UnityTags.HexManager.ToString()).GetComponent<HexManager>();
+            regenTime = new WaitForSeconds(shieldRegenDelay);
+        }
+
+        internal void Start()
         {
             GameObject.FindObjectOfType<ShieldManager>().RegisterNewGenerator(this);
-            GenerateBaseShields();
+            hasPower = myCell.HasPower;
+            if (hasPower && isPowered)
+                GenerateBaseShields();
+            StartCoroutine(nameof(PeriodicRegen));
+        }
+
+        private IEnumerator PeriodicRegen()
+        {
+            while (true)
+            {
+                yield return regenTime;
+                RegenerateShields();
+            }
         }
 
         private void GenerateBaseShields()
         {
             GetCellsInRange(1);
-
             foreach (var cell in cellsInRange)
             {
                 if (CheckOldShield(cell))
@@ -46,6 +69,9 @@ namespace ProjectTime.Shielding
 
         private void RegenerateShields()
         {
+            if (!hasPower || !isPowered) { return; }
+            if (onPeriodicRegen != null)
+                onPeriodicRegen();
             GenerateBaseShields();
             ChangeShieldLevel(0);
         }
@@ -107,14 +133,12 @@ namespace ProjectTime.Shielding
         private void GetCellsInRange(int rangeMultiplier)
         {
             cellsInRange.Clear();
-            var hexManager = GameObject.FindGameObjectWithTag(UnityTags.HexManager.ToString()).GetComponent<HexManager>();
             var shieldRange = (Hex.innerRadius * 2 * rangeMultiplier) + 1f;
             cellsInRange = hexManager.NearestCells(transform.position, shieldRange);
         }
 
         public override void Cleanup()
         {
-            print("cleanup is happeng in SheildGenerator");
             GetCellsInRange(shieldLevel);
 
             foreach (var cell in cellsInRange)
@@ -125,7 +149,6 @@ namespace ProjectTime.Shielding
                     removeShield.Remove();
                 }
             }
-            // onRemoveShield();
         }
 
         // TODO remove update which was added for testing
@@ -133,15 +156,13 @@ namespace ProjectTime.Shielding
         {
             if (Input.GetKeyDown(KeyCode.UpArrow))
             {
-                ChangeShieldLevel(1);
+                if (hasPower && isPowered)
+                    ChangeShieldLevel(1);
             }
             else if (Input.GetKeyDown(KeyCode.DownArrow))
             {
-                ChangeShieldLevel(-1);
-            }
-            else if (Input.GetKeyDown(KeyCode.F5))
-            {
-                ChangeShieldLevel(0);
+                if (hasPower && isPowered)
+                    ChangeShieldLevel(-1);
             }
         }
     }

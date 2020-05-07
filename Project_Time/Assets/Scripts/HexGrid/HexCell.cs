@@ -3,6 +3,7 @@ using UnityEngine.UI;
 using ProjectTime.Build;
 using ProjectTime.Resources;
 using ProjectTime.Shielding;
+using UnityEngine.EventSystems;
 
 namespace ProjectTime.HexGrid
 {
@@ -12,6 +13,7 @@ namespace ProjectTime.HexGrid
         bool isAvailable = true;
         bool hasResource = false;
         bool hasShield = false;
+        bool hasPower = false;
         Building currentBuilding = null;
         Resource currentResource = null;
         Shield shield = null;
@@ -19,6 +21,10 @@ namespace ProjectTime.HexGrid
         public bool IsAvailable { get => isAvailable; }
         public bool HasResource { get => hasResource; }
         public bool HasShield { get => hasShield; }
+        public bool HasPower { get => hasPower; }
+        public Building CurrentBuilding { get => currentBuilding; }
+        public Resource CurrentResource { get => currentResource; }
+        public Shield Shield { get => shield; }
 
         private void Start()
         {
@@ -30,7 +36,14 @@ namespace ProjectTime.HexGrid
 
         private void OnMouseEnter()
         {
+            if (EventSystem.current.IsPointerOverGameObject()) { return; }
             gameObject.layer = 9;
+        }
+
+        private void OnMouseOver()
+        {
+            if (EventSystem.current.IsPointerOverGameObject())
+                gameObject.layer = 1;
         }
 
         private void OnMouseExit()
@@ -87,6 +100,11 @@ namespace ProjectTime.HexGrid
         public Shield GetShield()
         {
             return shield;
+        }
+
+        public void PowerUp()
+        {
+            hasPower = true;
         }
     }
 }

@@ -15,7 +15,8 @@ namespace ProjectTime.Shielding
 
         public void TriggerRegen()
         {
-            onRegenShields();
+            if (onRegenShields != null)
+                onRegenShields();
         }
     }
 }

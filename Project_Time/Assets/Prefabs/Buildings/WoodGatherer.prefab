@@ -142,8 +142,14 @@ MonoBehaviour:
   isPowered: 1
   buildingUI: {fileID: 3854070898699571560, guid: 728fc4d72c5030b4898e248642ede58a,
     type: 3}
+  buildCost:
+    wood: 0
+    stone: 50
+    steel: 50
+    food: 0
   resourceType: 0
   currentResourceAmount: 0
   resourceCapacity: 10000
   gatherRangeInHexes: 1
   gatherRate: 3
+  gatherFrequency: 5

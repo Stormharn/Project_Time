@@ -53,5 +53,10 @@ namespace ProjectTime.UI
             integrityUI.maxValue = targetBuilding.MaxIntergity;
             integrityUI.value = targetBuilding.Integrity;
         }
+
+        public override void DeleteBuilding()
+        {
+
+        }
     }
 }

@@ -5,6 +5,7 @@ using ProjectTime.Build;
 using ProjectTime.Core;
 using System;
 using ProjectTime.Shielding;
+using ProjectTime.Resources;
 
 namespace ProjectTime.UI
 {
@@ -27,8 +28,9 @@ namespace ProjectTime.UI
             deleteBuildingButton.onClick.AddListener(DeleteBuilding);
         }
 
-        private void DeleteBuilding()
+        public override void DeleteBuilding()
         {
+            GameObject.FindObjectOfType<ResourceManager>().Refund(targetBuilding.BuildCost, .5f);
             targetBuilding.Remove();
         }
 

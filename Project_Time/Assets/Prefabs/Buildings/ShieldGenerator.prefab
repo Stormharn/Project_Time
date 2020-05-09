@@ -63,6 +63,11 @@ MonoBehaviour:
   isPowered: 1
   buildingUI: {fileID: 960091013106885859, guid: 31218927e2d9e284cb229bf54722f7c5,
     type: 3}
+  buildCost:
+    wood: 100
+    stone: 100
+    steel: 100
+    food: 0
   goodShieldPrefab: {fileID: 3560191464833158477, guid: 264a053b861312a4db33c19aa03628a6,
     type: 3}
   fairShieldPrefab: {fileID: 3560191464833158477, guid: 096bf0eef5175144abbaa17f62fb8423,
@@ -70,6 +75,8 @@ MonoBehaviour:
   lowShieldPrefab: {fileID: 3560191464833158477, guid: f699f7e6741c91a479db01837f3ca99c,
     type: 3}
   shieldRegenDelay: 20
+  baseShieldMultiplier: 1
+  shieldExtendMultiplier: 1
 --- !u!1 &2688662940576650093
 GameObject:
   m_ObjectHideFlags: 0

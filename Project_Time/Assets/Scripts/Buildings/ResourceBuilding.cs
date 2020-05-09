@@ -31,7 +31,7 @@ namespace ProjectTime.Build
         {
             gatherDelay = new WaitForSeconds(gatherFrequency);
             resourceManager = GameObject.FindObjectOfType<ResourceManager>();
-            resourceManager.UpdateBuildings();
+            resourceManager.AddMaxResource(resourceType, ResourceCapacity);
             gatherRange = (Hex.innerRadius * 2 * gatherRangeInHexes) + 1f;
             FindNearbyResources();
             StartCoroutine(nameof(GatherResources));
@@ -77,13 +77,29 @@ namespace ProjectTime.Build
                     {
                         if (currentResourceAmount < resourceCapacity)
                         {
-                            var gathered = resource.Gather(gatherRate);
-                            currentResourceAmount += gathered;
-                            resourceManager.UpdateResources();
+                            var result = AllResources(resourceType);
+                            if (result.current < result.max)
+                            {
+                                var gathered = resource.Gather(gatherRate);
+                                currentResourceAmount += gathered;
+                                resourceManager.AddResource(resourceType, gathered);
+                            }
                         }
                     }
                 }
             }
+        }
+
+        private (float current, float max) AllResources(ResourceTypes type)
+        {
+            if (type == ResourceTypes.Wood)
+                return resourceManager.WoodStats();
+            else if (type == ResourceTypes.Stone)
+                return resourceManager.StoneStats();
+            else if (type == ResourceTypes.Steel)
+                return resourceManager.SteelStats();
+
+            return (0, 0);
         }
 
         private void ResourceEmpty(Resource removeResource)
@@ -93,7 +109,8 @@ namespace ProjectTime.Build
 
         public override void Cleanup()
         {
-
+            resourceManager.LowerMaxResource(resourceType, resourceCapacity);
+            resourceManager.LowerResource(resourceType, currentResourceAmount);
         }
     }
 }

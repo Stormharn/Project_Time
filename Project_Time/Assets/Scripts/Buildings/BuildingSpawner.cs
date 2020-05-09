@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using ProjectTime.HexGrid;
+using ProjectTime.Resources;
 
 namespace ProjectTime.Build
 {
@@ -10,6 +11,7 @@ namespace ProjectTime.Build
         // Declarations
         #region Declarations
         Building currentBuilding = null;
+        ResourceManager resourceManager;
         Transform buildingsParent;
 
         public Building CurrentBuilding { get => currentBuilding; }
@@ -20,6 +22,8 @@ namespace ProjectTime.Build
         private void Awake()
         {
             buildingsParent = GameObject.FindGameObjectWithTag(UnityTags.BuildingsParent.ToString()).transform;
+            resourceManager = GameObject.FindObjectOfType<ResourceManager>();
+
         }
         #endregion
 
@@ -39,31 +43,19 @@ namespace ProjectTime.Build
 
                 if (hexCell.IsAvailable)
                 {
-                    if (currentBuilding)
+                    if (currentBuilding && resourceManager.CanAffordToBuild(currentBuilding.BuildCost))
+                    {
                         currentBuilding.Build(hit.transform, buildingsParent, hexCell);
-                }
-            }
-        }
-
-        public void RemoveBuilding(Camera playerCam)
-        {
-            var inputRay = playerCam.ScreenPointToRay(Input.mousePosition);
-            if (Physics.Raycast(inputRay, out var hit, 1000f))
-            {
-                var hexCell = hit.transform.GetComponent<HexCell>();
-                if (hexCell == null) { return; }
-
-                if (!hexCell.IsAvailable && !hexCell.HasResource)
-                {
-                    var building = hexCell.CurrentBuilding;
-                    building.Remove();
+                        resourceManager.Build(currentBuilding.BuildCost);
+                    }
                 }
             }
         }
 
         public void SelectBuildingType(Building newBuildingType)
         {
-            currentBuilding = newBuildingType;
+            if (newBuildingType == null || resourceManager.CanAffordToBuild(newBuildingType.BuildCost))
+                currentBuilding = newBuildingType;
         }
 
         public void StopBuilding()

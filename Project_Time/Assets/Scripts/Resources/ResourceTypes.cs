@@ -4,6 +4,7 @@ namespace ProjectTime.Resources
     {
         Wood,
         Steel,
-        Stone
+        Stone,
+        Food
     }
 }

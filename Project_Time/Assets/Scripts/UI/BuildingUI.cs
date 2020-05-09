@@ -13,5 +13,7 @@ namespace ProjectTime.UI
         internal Player player;
 
         public abstract void SetTarget(GameObject target);
+
+        public abstract void DeleteBuilding();
     }
 }

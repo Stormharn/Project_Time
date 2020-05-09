@@ -32,8 +32,6 @@ namespace ProjectTime.HexGrid
             position.z = z * (Hex.outerRadius * 1.5f);
 
             HexCell cell = cells[i] = Instantiate<HexCell>(cellPrefab, position, Quaternion.identity, transform);
-            if (position == Vector3.zero)
-                cell.tag = UnityTags.StartBase.ToString();
             cell.PowerUp(); //TODO remove this code - only for testing
         }
 
@@ -57,9 +55,17 @@ namespace ProjectTime.HexGrid
             {
                 var distance = Vector3.Distance(cell.transform.position, position);
                 if (distance < closestDistance)
+                {
                     closest = cell;
+                    closestDistance = distance;
+                }
             }
             return closest;
+        }
+
+        public HexCell RandomCell()
+        {
+            return cells[Random.Range(0, cells.Length)];
         }
     }
 }

@@ -4,7 +4,9 @@ using ProjectTime.Build;
 using System.Collections.Generic;
 using System.Collections;
 using System;
+using UnityEngine.UI;
 
+// TODO add cooldown for extend/lower shields
 namespace ProjectTime.Shielding
 {
     public class ShieldGenerator : Building
@@ -13,11 +15,16 @@ namespace ProjectTime.Shielding
         [SerializeField] Shield fairShieldPrefab;
         [SerializeField] Shield lowShieldPrefab;
         [SerializeField] float shieldRegenDelay = 20f;
+        [SerializeField] int baseShieldMultiplier = 1;
+        [SerializeField] int shieldExtendMultiplier = 1;
         List<HexCell> cellsInRange = new List<HexCell>();
-        int shieldLevel = 1;
+        [Range(0, 2)] int shieldExtendLevel = 0;
         WaitForSeconds regenTime;
         HexManager hexManager;
 
+        public int ShieldExtendLevel { get => shieldExtendLevel; }
+        public int BaseShieldMultiplier { get => baseShieldMultiplier; }
+        public int ShieldExtendMultiplier { get => shieldExtendMultiplier; }
 
         public event Action onRemoveShield;
         public event Action onPeriodicRegen;
@@ -59,7 +66,7 @@ namespace ProjectTime.Shielding
 
         private void GenerateBaseShields()
         {
-            GetCellsInRange(1);
+            GetCellsInRange(baseShieldMultiplier);
             foreach (var cell in cellsInRange)
             {
                 if (CheckOldShield(cell))
@@ -89,17 +96,18 @@ namespace ProjectTime.Shielding
 
         public void ChangeShieldLevel(int change)
         {
+            if (!hasPower || !isPowered) { return; }
             if (change != 0)
             {
                 if (change > 0)
                 {
-                    if (shieldLevel >= 3) { return; }
-                    shieldLevel++;
+                    if (shieldExtendLevel == 2) { return; }
+                    shieldExtendLevel++;
                 }
                 else
                 {
-                    if (shieldLevel <= 1) { return; }
-                    shieldLevel--;
+                    if (shieldExtendLevel == 0) { return; }
+                    shieldExtendLevel--;
                 }
             }
 
@@ -108,17 +116,17 @@ namespace ProjectTime.Shielding
                 CheckOldShield(cell);
             }
 
-            GetCellsInRange(shieldLevel);
+            GetCellsInRange(baseShieldMultiplier + (shieldExtendLevel * ShieldExtendMultiplier));
             foreach (var cell in cellsInRange)
             {
                 if (CheckOldShield(cell))
                 {
-                    switch (shieldLevel)
+                    switch (shieldExtendLevel)
                     {
-                        case 3:
+                        case 2:
                             lowShieldPrefab.Spawn(cell.transform, this, cell, false);
                             break;
-                        case 2:
+                        case 1:
                             fairShieldPrefab.Spawn(cell.transform, this, cell, false);
                             break;
                         default:
@@ -139,7 +147,7 @@ namespace ProjectTime.Shielding
 
         public override void Cleanup()
         {
-            GetCellsInRange(shieldLevel);
+            GetCellsInRange(baseShieldMultiplier + (shieldExtendLevel * ShieldExtendMultiplier));
 
             foreach (var cell in cellsInRange)
             {
@@ -148,21 +156,6 @@ namespace ProjectTime.Shielding
                     var removeShield = cell.GetShield();
                     removeShield.Remove();
                 }
-            }
-        }
-
-        // TODO remove update which was added for testing
-        private void Update()
-        {
-            if (Input.GetKeyDown(KeyCode.UpArrow))
-            {
-                if (hasPower && isPowered)
-                    ChangeShieldLevel(1);
-            }
-            else if (Input.GetKeyDown(KeyCode.DownArrow))
-            {
-                if (hasPower && isPowered)
-                    ChangeShieldLevel(-1);
             }
         }
     }

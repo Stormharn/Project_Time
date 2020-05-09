@@ -47,7 +47,8 @@ MonoBehaviour:
   resourceType: 0
   resourceAmount: 100
   gatherAmount: 10
-  resourceUI: {fileID: 0}
+  resourceUI: {fileID: 679827719336858788, guid: 3f1314421e7ea2a46b98beac533be7cb,
+    type: 3}
 --- !u!1 &3108661866980583277
 GameObject:
   m_ObjectHideFlags: 0

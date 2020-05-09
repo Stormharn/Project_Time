@@ -8,5 +8,7 @@ public enum UnityTags
     ResourceParent,
     HexManager,
     ResourceBuildingUI,
-    MainUI
+    MainUI,
+    Shield,
+    KillBox
 }

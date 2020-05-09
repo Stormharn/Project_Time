@@ -11,6 +11,8 @@ TagManager:
   - HexManager
   - ResourceBuildingUI
   - MainUI
+  - Shield
+  - KillBox
   layers:
   - Default
   - TransparentFX

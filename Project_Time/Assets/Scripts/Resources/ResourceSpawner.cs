@@ -35,7 +35,8 @@ namespace ProjectTime.Resources
                 {
                     curResource = resourceTypes[Random.Range(0, resourceTypes.Count)];
                     var hexCell = gObject.GetComponent<HexCell>();
-                    curResource.Spawn(hexCell.transform, resourceParent, hexCell);
+                    if (hexCell.IsAvailable)
+                        curResource.Spawn(hexCell.transform, resourceParent, hexCell);
                 }
             }
         }

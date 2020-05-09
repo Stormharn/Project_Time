@@ -1,4 +1,5 @@
 using ProjectTime.Build;
+using ProjectTime.Core;
 using ProjectTime.HexGrid;
 using UnityEngine;
 
@@ -7,14 +8,18 @@ namespace ProjectTime.Shielding
     public class Shield : MonoBehaviour
     {
         [SerializeField] int baseShieldStrength = 10;
-        int shieldStrength;
+        [SerializeField] string shieldLevel;
+        float shieldStrength;
         HexCell myHexCell = null;
         ShieldGenerator myParent = null;
         bool isBase = false;
 
         public bool IsBase { get => isBase; }
+        public float ShieldStrength { get => shieldStrength; }
+        public string ShieldLevel { get => shieldLevel; }
+        public int BaseShieldStrength { get => baseShieldStrength; }
 
-        public void TakeDamage(int damage)
+        public void TakeDamage(float damage)
         {
             shieldStrength -= damage;
             if (shieldStrength <= 0)
@@ -44,13 +49,6 @@ namespace ProjectTime.Shielding
         private void RefreshShieldStrength()
         {
             shieldStrength = baseShieldStrength;
-        }
-
-        //TODO remove update added for testing
-        private void Update()
-        {
-            if (Input.GetKeyDown(KeyCode.Space))
-                TakeDamage(10);
         }
     }
 }

@@ -7,26 +7,33 @@ using System;
 
 namespace ProjectTime.UI
 {
-    public class ResourceBuildingUI : BuildingUI
+    public class StartBaseBuildingUI : BuildingUI
     {
         [SerializeField] TextMeshProUGUI nameUI;
         [SerializeField] Slider integrityUI;
         [SerializeField] TextMeshProUGUI integrityTextUI;
-        [SerializeField] TextMeshProUGUI typeUI;
-        [SerializeField] TextMeshProUGUI amountUI;
+        [SerializeField] Button expandShieldButton;
+        [SerializeField] Button shrinkShieldButton;
 
-        ResourceBuilding targetBuilding;
+        StartBase targetBuilding;
 
         private void Start()
         {
             player = GameObject.FindObjectOfType<Player>();
             closeButton.onClick.AddListener(CloseOnClick);
-            deleteBuildingButton.onClick.AddListener(DeleteBuilding);
+            expandShieldButton.onClick.AddListener(ExpandShields);
+            shrinkShieldButton.onClick.AddListener(ShrinkShields);
+
         }
 
-        private void DeleteBuilding()
+        private void ShrinkShields()
         {
-            targetBuilding.Remove();
+            targetBuilding.ChangeShieldLevel(-1);
+        }
+
+        private void ExpandShields()
+        {
+            targetBuilding.ChangeShieldLevel(1);
         }
 
         private void CloseOnClick()
@@ -36,7 +43,7 @@ namespace ProjectTime.UI
 
         public override void SetTarget(GameObject target)
         {
-            targetBuilding = (ResourceBuilding)target.GetComponent<Building>();
+            targetBuilding = (StartBase)target.GetComponent<Building>();
         }
 
         private void OnGUI()
@@ -45,10 +52,6 @@ namespace ProjectTime.UI
             integrityTextUI.text = targetBuilding.Integrity.ToString();
             integrityUI.maxValue = targetBuilding.MaxIntergity;
             integrityUI.value = targetBuilding.Integrity;
-            typeUI.text = targetBuilding.ResourceType.ToString();
-            amountUI.text = string.Format("{0:0} / {1:0}",
-                            targetBuilding.CurrentResourceAmount.ToString(),
-                            targetBuilding.ResourceCapacity.ToString());
         }
     }
 }

@@ -15,6 +15,7 @@ namespace ProjectTime.Resources
 
         public ResourceTypes ResourceType { get => resourceType; }
         public Image ResourceUI { get => resourceUI; }
+        public float ResourceAmount { get => resourceAmount; }
 
         public event Action<Resource> onResourceEmpty;
 
@@ -35,7 +36,7 @@ namespace ProjectTime.Resources
                 gather = resourceAmount;
                 resourceAmount = 0;
                 onResourceEmpty(this);
-                Invoke(nameof(Remove), 5f);
+                Remove();
             }
             return gather;
         }

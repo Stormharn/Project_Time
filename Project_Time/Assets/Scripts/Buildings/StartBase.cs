@@ -20,6 +20,7 @@ namespace ProjectTime.Build
             myCell.AddBuilding(this);
             myCell.PowerUp();
             base.Start();
+            integrity = maxIntergity;
         }
     }
 }

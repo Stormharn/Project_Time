@@ -14,12 +14,13 @@ namespace ProjectTime.Build
         [SerializeField] float resourceCapacity = 100f;
         [SerializeField] [Range(1, 5)] int gatherRangeInHexes = 1;
         [SerializeField] float gatherRate = 1f;
+        [SerializeField] float gatherFrequency = 5f;
 
         List<Resource> gatherableResources = new List<Resource>();
         List<Resource> removeResources = new List<Resource>();
         List<HexCell> cellsInRange = new List<HexCell>();
         float gatherRange;
-        WaitForSeconds gatherDelay = new WaitForSeconds(10f);
+        WaitForSeconds gatherDelay;
         ResourceManager resourceManager;
 
         public float CurrentResourceAmount { get => currentResourceAmount; }
@@ -28,6 +29,7 @@ namespace ProjectTime.Build
 
         private void Start()
         {
+            gatherDelay = new WaitForSeconds(gatherFrequency);
             resourceManager = GameObject.FindObjectOfType<ResourceManager>();
             resourceManager.UpdateBuildings();
             gatherRange = (Hex.innerRadius * 2 * gatherRangeInHexes) + 1f;

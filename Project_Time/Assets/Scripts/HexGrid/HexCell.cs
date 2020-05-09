@@ -42,7 +42,7 @@ namespace ProjectTime.HexGrid
 
         private void OnMouseOver()
         {
-            if (EventSystem.current.IsPointerOverGameObject())
+            if (EventSystem.current.IsPointerOverGameObject() && gameObject.layer != 1)
                 gameObject.layer = 1;
         }
 
@@ -53,15 +53,12 @@ namespace ProjectTime.HexGrid
 
         public void AddBuilding(Building newBuilding)
         {
-            if (!isAvailable) { return; }
             isAvailable = false;
             currentBuilding = newBuilding;
         }
 
         public void RemoveBuilding()
         {
-            if (isAvailable) { return; }
-            currentBuilding.Remove();
             currentBuilding = null;
             isAvailable = true;
         }

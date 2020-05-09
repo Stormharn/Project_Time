@@ -58,7 +58,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 26c83ba0106f8cd43abd511613861254, type: 2}
+  - {fileID: 2100000, guid: e09e4e1c3d85a8b4bbddb901d003b125, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -91,7 +91,7 @@ GameObject:
   - component: {fileID: 2698952983634629547}
   - component: {fileID: 8656939200044312376}
   m_Layer: 0
-  m_Name: WoodGatherer
+  m_Name: StoneGatherer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -136,13 +136,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c52fe02e1cf31a64cbff1872df3ed3c9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  buildingName: Wood Gatherer
+  buildingName: Stone Gatherer
   maxIntergity: 300
   hasPower: 0
   isPowered: 1
-  buildingUI: {fileID: 3544096322446356851, guid: 13c5d506f64e7f34bb890a532bbff3e0,
+  buildingUI: {fileID: 3854070898699571560, guid: 728fc4d72c5030b4898e248642ede58a,
     type: 3}
-  resourceType: 0
+  resourceType: 2
   currentResourceAmount: 0
   resourceCapacity: 10000
   gatherRangeInHexes: 1

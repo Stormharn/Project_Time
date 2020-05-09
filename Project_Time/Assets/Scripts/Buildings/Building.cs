@@ -2,6 +2,7 @@
 using ProjectTime.HexGrid;
 using UnityEngine.UI;
 using ProjectTime.UI;
+using ProjectTime.Core;
 
 namespace ProjectTime.Build
 {
@@ -36,6 +37,19 @@ namespace ProjectTime.Build
         {
             if (buildingName != "Head Quarters")
             {
+                myCell.RemoveBuilding();
+                GameObject.FindObjectOfType<Player>().CloseUI();
+                Cleanup();
+                Destroy(this.gameObject);
+            }
+        }
+
+        public void Remove(bool removeAll)
+        {
+            if (removeAll)
+            {
+                myCell.RemoveBuilding();
+                GameObject.FindObjectOfType<Player>().CloseUI();
                 Cleanup();
                 Destroy(this.gameObject);
             }
@@ -44,6 +58,25 @@ namespace ProjectTime.Build
         public void TogglePowered()
         {
             isPowered = !isPowered;
+        }
+
+        public void TakeDamage(float damage)
+        {
+            integrity -= damage;
+            if (integrity <= 0)
+                Remove(true);
+        }
+
+        public void Repair(float health)
+        {
+            integrity += health;
+            if (integrity >= maxIntergity)
+                integrity = maxIntergity;
+        }
+
+        public bool IsShielded()
+        {
+            return myCell.HasShield;
         }
 
         public abstract void Cleanup();

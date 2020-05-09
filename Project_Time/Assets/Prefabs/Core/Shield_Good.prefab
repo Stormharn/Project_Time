@@ -13,9 +13,10 @@ GameObject:
   - component: {fileID: 3591630154049506922}
   - component: {fileID: 3560191464833158477}
   - component: {fileID: 6788008776869913633}
-  m_Layer: 0
+  - component: {fileID: -5375914386870510708}
+  m_Layer: 2
   m_Name: Shield_Good
-  m_TagString: Untagged
+  m_TagString: Shield
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -106,3 +107,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a360bddf40652ea4b816556fcb61d411, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!135 &-5375914386870510708
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3018782378507238070}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 9
+  m_Center: {x: 0, y: 0, z: 0}

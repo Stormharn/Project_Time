@@ -7,6 +7,7 @@ using UnityEngine.UI;
 using System;
 using ProjectTime.HexGrid;
 using ProjectTime.UI;
+using ProjectTime.Shielding;
 
 namespace ProjectTime.Core
 {
@@ -16,6 +17,7 @@ namespace ProjectTime.Core
         #region Declarations
         [SerializeField] Image mainUI;
         [SerializeField] Image buildUI;
+        [SerializeField] Image shieldUI;
         [SerializeField] BuildingSpawner buildingSpawner;
         Image openedPanel;
         Image activePanel;
@@ -52,25 +54,41 @@ namespace ProjectTime.Core
                     if (buildingSpawner.CurrentBuilding != null)
                     {
                         buildingSpawner.PlaceBuilding(playerCam);
+                        if (Input.GetKey(KeyCode.LeftShift)) { return; }
+                        buildingSpawner.SelectBuildingType(null);
+                        BackUI();
                         return;
                     }
                     else if (hexCell.CurrentBuilding != null)
                     {
                         OpenUI(hexCell.CurrentBuilding.buildingUI);
                         openedPanel.GetComponent<BuildingUI>().SetTarget(hexCell.CurrentBuilding.gameObject);
-                        return;
                     }
                     else if (hexCell.CurrentResource != null)
                     {
-                        ChangeUI(hexCell.CurrentResource.ResourceUI);
-                        return;
+                        OpenUI(hexCell.CurrentResource.ResourceUI);
+                        openedPanel.GetComponent<ResourceUI>().SetTarget(hexCell.CurrentResource.gameObject);
                     }
+                    else
+                    {
+                        CloseUI();
+                        CloseShieldUI();
+                    }
+
+
+                    if (hexCell.Shield != null)
+                    {
+                        OpenShieldUI(hexCell.Shield);
+                    }
+
 
                 }
             }
             else if (Input.GetMouseButtonDown(1))
             {
-                buildingSpawner.RemoveBuilding(playerCam);
+                BackUI();
+                CloseUI();
+                CloseShieldUI();
             }
         }
 
@@ -96,15 +114,27 @@ namespace ProjectTime.Core
 
         public void OpenUI(Image UI)
         {
-            if (openedPanel != null)
-                CloseUI();
+            CloseUI();
             openedPanel = Instantiate(UI, GameObject.FindGameObjectWithTag(UnityTags.MainUI.ToString()).transform);
+        }
+
+        public void OpenShieldUI(Shield shield)
+        {
+            shieldUI.gameObject.SetActive(false);
+            shieldUI.GetComponent<ShieldUI>().SetTarget(shield);
+            shieldUI.gameObject.SetActive(true);
         }
 
         public void CloseUI()
         {
+            if (openedPanel == null) { return; }
             Destroy(openedPanel.gameObject);
             openedPanel = null;
+        }
+
+        public void CloseShieldUI()
+        {
+            shieldUI.gameObject.SetActive(false);
         }
 
         public void BackUI()

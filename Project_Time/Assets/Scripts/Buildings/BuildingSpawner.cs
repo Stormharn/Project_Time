@@ -55,7 +55,8 @@ namespace ProjectTime.Build
 
                 if (!hexCell.IsAvailable && !hexCell.HasResource)
                 {
-                    hexCell.RemoveBuilding();
+                    var building = hexCell.CurrentBuilding;
+                    building.Remove();
                 }
             }
         }

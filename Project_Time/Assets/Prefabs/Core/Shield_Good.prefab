@@ -95,6 +95,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   baseShieldStrength: 100
+  shieldLevel: Strong
+  status: 2
 --- !u!114 &6788008776869913633
 MonoBehaviour:
   m_ObjectHideFlags: 0

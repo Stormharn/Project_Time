@@ -7,12 +7,10 @@ namespace ProjectTime.UI
     public class ResourceText : MonoBehaviour
     {
         [SerializeField] ResourceTypes types;
-        ResourceManager resourceManager;
         TextMeshProUGUI textMeshPro;
 
         private void Awake()
         {
-            resourceManager = GameObject.FindObjectOfType<ResourceManager>();
             textMeshPro = GetComponent<TextMeshProUGUI>();
         }
 
@@ -22,13 +20,16 @@ namespace ProjectTime.UI
             switch (types)
             {
                 case ResourceTypes.Wood:
-                    result = resourceManager.WoodStats();
+                    result = ResourceManager.Instance.GetWoodStats();
                     break;
                 case ResourceTypes.Stone:
-                    result = resourceManager.StoneStats();
+                    result = ResourceManager.Instance.GetStoneStats();
                     break;
                 case ResourceTypes.Steel:
-                    result = resourceManager.SteelStats();
+                    result = ResourceManager.Instance.GetSteelStats();
+                    break;
+                case ResourceTypes.Food:
+                    result = ResourceManager.Instance.GetFoodStats();
                     break;
             }
 

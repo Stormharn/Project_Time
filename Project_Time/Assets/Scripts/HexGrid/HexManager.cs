@@ -4,39 +4,31 @@ using UnityEngine.UI;
 
 namespace ProjectTime.HexGrid
 {
-    public class HexManager : MonoBehaviour
+    public sealed class HexManager
     {
-        [SerializeField] int width = 6;
-        [SerializeField] public int height = 6;
-        [SerializeField] public HexCell cellPrefab;
+        private static readonly HexManager instance = new HexManager();
+        private static List<HexCell> cells;
 
-        HexCell[] cells;
-
-        void Awake()
+        static HexManager()
         {
-            cells = new HexCell[height * width];
-            for (int z = 0, i = 0; z < height; z++)
-            {
-                for (int x = 0; x < width; x++)
-                {
-                    CreateCell(Mathf.RoundToInt(x - width / 2), Mathf.RoundToInt(z - height / 2), i++);
-                }
-            }
+            cells = new List<HexCell>();
         }
 
-        void CreateCell(int x, int z, int i)
-        {
-            Vector3 position;
-            position.x = (x + z * 0.5f - z / 2) * (Hex.innerRadius * 2f);
-            position.y = 0f;
-            position.z = z * (Hex.outerRadius * 1.5f);
+        private HexManager() { }
 
-            HexCell cell = cells[i] = Instantiate<HexCell>(cellPrefab, position, Quaternion.identity, transform);
-            cell.PowerUp(); //TODO remove this code - only for testing
+        public static HexManager Instance
+        {
+            get { return instance; }
         }
 
-        public List<HexCell> NearestCells(Vector3 position, float range)
+        public void AddHex(HexCell cell)
         {
+            cells.Add(cell);
+        }
+
+        public List<HexCell> NearestCells(Vector3 position, float multiplier)
+        {
+            var range = (Hex.innerRadius * 2 * multiplier) + 1f;
             var list = new List<HexCell>();
             foreach (var cell in cells)
             {
@@ -65,7 +57,12 @@ namespace ProjectTime.HexGrid
 
         public HexCell RandomCell()
         {
-            return cells[Random.Range(0, cells.Length)];
+            return cells[Random.Range(0, cells.Count)];
+        }
+
+        public List<HexCell> AllCells()
+        {
+            return cells;
         }
     }
 }

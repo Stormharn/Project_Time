@@ -4,6 +4,8 @@ using ProjectTime.Build;
 using ProjectTime.Resources;
 using ProjectTime.Shielding;
 using UnityEngine.EventSystems;
+using System;
+using System.Collections.Generic;
 
 namespace ProjectTime.HexGrid
 {
@@ -17,6 +19,7 @@ namespace ProjectTime.HexGrid
         Building currentBuilding = null;
         Resource currentResource = null;
         Shield shield = null;
+        List<PowerGenerator> poweredBy = new List<PowerGenerator>();
 
         public bool IsAvailable { get => isAvailable; }
         public bool HasResource { get => hasResource; }
@@ -43,12 +46,12 @@ namespace ProjectTime.HexGrid
         private void OnMouseOver()
         {
             if (EventSystem.current.IsPointerOverGameObject() && gameObject.layer != 1)
-                gameObject.layer = 1;
+                gameObject.layer = 10;
         }
 
         private void OnMouseExit()
         {
-            gameObject.layer = 1;
+            gameObject.layer = 10;
         }
 
         public void AddBuilding(Building newBuilding)
@@ -99,9 +102,35 @@ namespace ProjectTime.HexGrid
             return shield;
         }
 
-        public void PowerUp()
+        public void PowerUp(PowerGenerator generator)
         {
             hasPower = true;
+            if (currentBuilding != null)
+            {
+                currentBuilding.hasPower = true;
+                currentBuilding.PowerUp();
+            }
+            if (generator != null)
+                poweredBy.Add(generator);
+        }
+
+        public void PowerDown(PowerGenerator generator)
+        {
+            poweredBy.Remove(generator);
+            if (poweredBy != null)
+            {
+                hasPower = false;
+                if (currentBuilding != null)
+                {
+                    currentBuilding.hasPower = false;
+                    currentBuilding.PowerDown();
+                }
+            }
+        }
+
+        public int PoweredByCount()
+        {
+            return poweredBy.Count;
         }
     }
 }

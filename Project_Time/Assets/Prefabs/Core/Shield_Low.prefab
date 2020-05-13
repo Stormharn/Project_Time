@@ -95,6 +95,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   baseShieldStrength: 25
+  shieldLevel: Minimal
+  status: 0
+  shieldMaterials:
+  - Status: 0
+    Material: {fileID: 2100000, guid: 765ca60362fd6e64a9528b7a1ad384f3, type: 2}
+  - Status: 1
+    Material: {fileID: 2100000, guid: fabede74e8e27fb4eb03fd01c583acbf, type: 2}
+  - Status: 2
+    Material: {fileID: 2100000, guid: b43c21b575d048d44b4ee4aaa1f1e3ca, type: 2}
 --- !u!114 &6788008776869913633
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -34,7 +34,7 @@ namespace ProjectTime.UI
         private void OnGUI()
         {
             nameUI.text = targetResource.ResourceType.ToString();
-            amountUI.text = string.Format("{0:0}", targetResource.ResourceAmount.ToString());
+            amountUI.text = string.Format("{0:0}", targetResource.CurrentResourceAmount.ToString());
         }
     }
 }

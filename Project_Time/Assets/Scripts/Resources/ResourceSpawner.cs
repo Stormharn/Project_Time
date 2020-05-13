@@ -28,13 +28,13 @@ namespace ProjectTime.Resources
 
         private void Start()
         {
-            var hexCells = GameObject.FindGameObjectsWithTag(UnityTags.HexCell.ToString());
-            foreach (var gObject in hexCells)
+            var hexCells = HexManager.Instance.AllCells();
+            foreach (var cell in hexCells)
             {
-                if (Random.Range(1f, 100f) < 20)
+                if (Random.Range(1f, 100f) < 20 && cell.IsAvailable)
                 {
                     curResource = resourceTypes[Random.Range(0, resourceTypes.Count)];
-                    var hexCell = gObject.GetComponent<HexCell>();
+                    var hexCell = cell.GetComponent<HexCell>();
                     if (hexCell.IsAvailable)
                         curResource.Spawn(hexCell.transform, resourceParent, hexCell);
                 }

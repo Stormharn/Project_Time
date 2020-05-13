@@ -13,9 +13,12 @@ namespace ProjectTime.Storm
 
         private void Start()
         {
-            var values = Enum.GetValues(typeof(MovementDirections));
-            randomDirection = (MovementDirections)values.GetValue(UnityEngine.Random.Range(0, values.Length));
             myTranform = transform;
+        }
+
+        public void InitializeEddy(MovementDirections direction)
+        {
+            randomDirection = direction;
         }
 
         private void Update()

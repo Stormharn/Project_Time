@@ -4,27 +4,24 @@ using UnityEngine.UI;
 using ProjectTime.Build;
 using ProjectTime.Core;
 using System;
-using ProjectTime.Shielding;
 using ProjectTime.Resources;
 
 namespace ProjectTime.UI
 {
-    public class ShieldGeneratorBuildingUI : BuildingUI
+    public class GathererBuildingUI : BuildingUI
     {
         [SerializeField] TextMeshProUGUI nameUI;
         [SerializeField] Slider integrityUI;
         [SerializeField] TextMeshProUGUI integrityTextUI;
-        [SerializeField] Button expandShieldButton;
-        [SerializeField] Button shrinkShieldButton;
+        [SerializeField] TextMeshProUGUI typeUI;
+        [SerializeField] TextMeshProUGUI amountUI;
 
-        ShieldGenerator targetBuilding;
+        GathererBuilding targetBuilding;
 
         private void Start()
         {
             player = GameObject.FindObjectOfType<Player>();
             closeButton.onClick.AddListener(CloseOnClick);
-            expandShieldButton.onClick.AddListener(ExpandShields);
-            shrinkShieldButton.onClick.AddListener(ShrinkShields);
             deleteBuildingButton.onClick.AddListener(DeleteBuilding);
             togglePowerButton.onClick.AddListener(TogglePower);
         }
@@ -40,17 +37,6 @@ namespace ProjectTime.UI
             targetBuilding.Remove(false);
         }
 
-
-        private void ShrinkShields()
-        {
-            targetBuilding.ReduceShields();
-        }
-
-        private void ExpandShields()
-        {
-            targetBuilding.ExpandShields();
-        }
-
         private void CloseOnClick()
         {
             player.CloseUI();
@@ -58,7 +44,7 @@ namespace ProjectTime.UI
 
         public override void SetTarget(GameObject target)
         {
-            targetBuilding = (ShieldGenerator)target.GetComponent<Building>();
+            targetBuilding = (GathererBuilding)target.GetComponent<Building>();
         }
 
         private void OnGUI()
@@ -67,6 +53,8 @@ namespace ProjectTime.UI
             integrityTextUI.text = targetBuilding.Health.ToString();
             integrityUI.maxValue = targetBuilding.MaxHealth;
             integrityUI.value = targetBuilding.Health;
+            typeUI.text = targetBuilding.ResourceType.ToString();
+            amountUI.text = targetBuilding.ResourceCapacity.ToString();
             powerText.text = targetBuilding.IsPowered.ToString();
         }
     }

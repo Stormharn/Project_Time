@@ -137,9 +137,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   buildingName: Wood Gatherer
-  maxIntergity: 300
-  hasPower: 0
-  isPowered: 1
+  maxHealth: 300
+  isPowered: 0
+  requiredPower: 1
   buildingUI: {fileID: 3854070898699571560, guid: 728fc4d72c5030b4898e248642ede58a,
     type: 3}
   buildCost:
@@ -148,8 +148,7 @@ MonoBehaviour:
     steel: 50
     food: 0
   resourceType: 0
-  currentResourceAmount: 0
-  resourceCapacity: 10000
+  resourceCapacity: 500
   gatherRangeInHexes: 1
-  gatherRate: 3
+  gatherRate: 1
   gatherFrequency: 5

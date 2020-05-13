@@ -15,6 +15,7 @@ namespace ProjectTime.Core
     {
         // Declarations
         #region Declarations
+        [SerializeField] StartBase startBasePrefab;
         [SerializeField] Image mainUI;
         [SerializeField] Image buildUI;
         [SerializeField] Image shieldUI;
@@ -33,6 +34,13 @@ namespace ProjectTime.Core
             previousPanel = mainUI;
             activePanel = mainUI;
             mainUI.gameObject.SetActive(true);
+        }
+
+        private void Start()
+        {
+            var homeCell = HexManager.Instance.ClosestCell(Vector3.zero);
+            var startingBase = Instantiate(startBasePrefab, homeCell.transform.position, Quaternion.identity, transform);
+            startingBase.Build(homeCell);
         }
 
         private void Update()

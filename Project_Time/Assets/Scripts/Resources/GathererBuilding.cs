@@ -3,14 +3,14 @@ using System.Collections;
 using System.Collections.Generic;
 using ProjectTime.HexGrid;
 using UnityEngine;
-using ProjectTime.Resources;
+using ProjectTime.Build;
+using ProjectTime.Core;
 
-namespace ProjectTime.Build
+namespace ProjectTime.Resources
 {
-    public class ResourceBuilding : Building
+    public class GathererBuilding : Building, IBuildable
     {
         [SerializeField] ResourceTypes resourceType;
-        [SerializeField] float currentResourceAmount = 0f;
         [SerializeField] float resourceCapacity = 100f;
         [SerializeField] [Range(1, 5)] int gatherRangeInHexes = 1;
         [SerializeField] float gatherRate = 1f;
@@ -21,26 +21,18 @@ namespace ProjectTime.Build
         List<HexCell> cellsInRange = new List<HexCell>();
         float gatherRange;
         WaitForSeconds gatherDelay;
-        ResourceManager resourceManager;
 
-        public float CurrentResourceAmount { get => currentResourceAmount; }
         public float ResourceCapacity { get => resourceCapacity; }
         public ResourceTypes ResourceType { get => resourceType; }
 
-        private void Start()
+        private void Awake()
         {
             gatherDelay = new WaitForSeconds(gatherFrequency);
-            resourceManager = GameObject.FindObjectOfType<ResourceManager>();
-            resourceManager.AddMaxResource(resourceType, ResourceCapacity);
-            gatherRange = (Hex.innerRadius * 2 * gatherRangeInHexes) + 1f;
-            FindNearbyResources();
-            StartCoroutine(nameof(GatherResources));
         }
 
         private void FindNearbyResources()
         {
-            var hexManager = GameObject.FindGameObjectWithTag(UnityTags.HexManager.ToString()).GetComponent<HexManager>();
-            cellsInRange = hexManager.NearestCells(transform.position, gatherRange);
+            cellsInRange = HexManager.Instance.NearestCells(transform.position, gatherRangeInHexes);
             CheckForResources();
         }
 
@@ -75,15 +67,12 @@ namespace ProjectTime.Build
                     removeResources.Clear();
                     foreach (var resource in gatherableResources)
                     {
-                        if (currentResourceAmount < resourceCapacity)
+                        var result = AllResources(resourceType);
+                        if (result.current < result.max)
                         {
-                            var result = AllResources(resourceType);
-                            if (result.current < result.max)
-                            {
-                                var gathered = resource.Gather(gatherRate);
-                                currentResourceAmount += gathered;
-                                resourceManager.AddResource(resourceType, gathered);
-                            }
+                            var gathered = resource.Gather(gatherRate);
+                            ResourceManager.Instance.AddResource(resourceType, gathered);
+
                         }
                     }
                 }
@@ -93,11 +82,11 @@ namespace ProjectTime.Build
         private (float current, float max) AllResources(ResourceTypes type)
         {
             if (type == ResourceTypes.Wood)
-                return resourceManager.WoodStats();
+                return ResourceManager.Instance.GetWoodStats();
             else if (type == ResourceTypes.Stone)
-                return resourceManager.StoneStats();
+                return ResourceManager.Instance.GetStoneStats();
             else if (type == ResourceTypes.Steel)
-                return resourceManager.SteelStats();
+                return ResourceManager.Instance.GetSteelStats();
 
             return (0, 0);
         }
@@ -109,8 +98,78 @@ namespace ProjectTime.Build
 
         public override void Cleanup()
         {
-            resourceManager.LowerMaxResource(resourceType, resourceCapacity);
-            resourceManager.LowerResource(resourceType, currentResourceAmount);
+            ResourceManager.Instance.LowerMaxResource(resourceType, resourceCapacity);
+        }
+
+        public override void PowerUp()
+        {
+
+        }
+
+        public override void PowerDown()
+        {
+
+        }
+
+        public override void Build(HexCell hexCell)
+        {
+            hexCell.AddBuilding(this);
+            myCell = hexCell;
+            health = maxHealth;
+            isPowered = true;
+            hasPower = hexCell.HasPower;
+            PowerGrid.Instance.UpdatePowerGrid();
+            ResourceManager.Instance.AddMaxResource(resourceType, ResourceCapacity);
+            FindNearbyResources();
+            StartCoroutine(nameof(GatherResources));
+        }
+
+        public override void Remove(bool removeAll)
+        {
+            myCell.RemoveBuilding();
+            GameObject.FindObjectOfType<Player>().CloseUI();
+            Cleanup();
+            Destroy(this.gameObject);
+        }
+
+        public override void TogglePowered()
+        {
+            isPowered = !isPowered;
+            PowerGrid.Instance.UpdatePowerGrid();
+        }
+
+        public override void TakeDamage(float damage)
+        {
+            health -= damage;
+            if (health <= 0)
+                Remove(true);
+        }
+
+        public override void Repair(float healing)
+        {
+            health += healing;
+            if (health > maxHealth)
+                health = maxHealth;
+        }
+
+        public override bool IsShielded()
+        {
+            return myCell.HasShield;
+        }
+
+        public BuildCost GetBuildCost()
+        {
+            return buildCost;
+        }
+
+        public bool isBuildable()
+        {
+            return ResourceManager.Instance.CanAffordToBuild(buildCost);
+        }
+
+        public void SetBuildable()
+        {
+            GameObject.FindObjectOfType<BuildingSpawner>().SelectBuildingType(this);
         }
     }
 }

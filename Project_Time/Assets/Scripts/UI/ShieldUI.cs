@@ -21,10 +21,10 @@ namespace ProjectTime.UI
 
         private void OnGUI()
         {
-            shieldLevelUI.text = targetShield.ShieldLevel;
-            shieldStrengthTextUI.text = targetShield.ShieldStrength.ToString();
-            shieldStrengthUI.maxValue = targetShield.BaseShieldStrength;
-            shieldStrengthUI.value = targetShield.ShieldStrength;
+            shieldLevelUI.text = targetShield.ShieldStatus.ToString();
+            shieldStrengthTextUI.text = targetShield.ShieldHealth.ToString();
+            shieldStrengthUI.maxValue = targetShield.BaseShieldHealth;
+            shieldStrengthUI.value = targetShield.ShieldHealth;
         }
     }
 }

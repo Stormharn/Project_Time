@@ -1,23 +1,31 @@
 using System;
-using ProjectTime.Build;
-using ProjectTime.Resources;
 using UnityEngine;
 
 namespace ProjectTime.Resources
 {
-    public class ResourceManager : MonoBehaviour
+    public sealed class ResourceManager
     {
-        [SerializeField] float currentWood = 100;
-        [SerializeField] float maxWood = 500;
-        [SerializeField] float currentStone = 100;
-        [SerializeField] float maxStone = 500;
-        [SerializeField] float currentSteel = 100;
-        [SerializeField] float maxSteel = 500;
-        [SerializeField] float currentFood = 100;
-        [SerializeField] float maxFood = 500;
+        private static readonly ResourceManager instance = new ResourceManager();
+        private static float currentWood;
+        private static float maxWood;
+        private static float currentStone;
+        private static float maxStone;
+        private static float currentSteel;
+        private static float maxSteel;
+        private static float currentFood;
+        private static float maxFood;
 
-        GameObject buildingParent;
-        ResourceBuilding[] buildings;
+        static ResourceManager()
+        {
+
+        }
+
+        private ResourceManager() { }
+
+        public static ResourceManager Instance
+        {
+            get { return instance; }
+        }
 
         public void AddMaxResource(ResourceTypes type, float amount)
         {
@@ -37,6 +45,14 @@ namespace ProjectTime.Resources
             {
                 maxFood += amount;
             }
+        }
+
+        public void AddMaxResourceAll(float amount)
+        {
+            maxWood += amount;
+            maxStone += amount;
+            maxSteel += amount;
+            maxFood += amount;
         }
 
         public void LowerMaxResource(ResourceTypes type, float amount)
@@ -87,6 +103,14 @@ namespace ProjectTime.Resources
             }
         }
 
+        public void AddResourceAll(float amount)
+        {
+            currentWood += amount;
+            currentStone += amount;
+            currentSteel += amount;
+            currentFood += amount;
+        }
+
         public void LowerResource(ResourceTypes type, float amount)
         {
             if (type == ResourceTypes.Wood)
@@ -115,32 +139,32 @@ namespace ProjectTime.Resources
             }
         }
 
-        public (float current, float max) WoodStats()
+        public (float current, float max) GetWoodStats()
         {
             return (currentWood, maxWood);
         }
 
-        public (float current, float max) StoneStats()
+        public (float current, float max) GetStoneStats()
         {
             return (currentStone, maxStone);
         }
 
-        public (float current, float max) SteelStats()
+        public (float current, float max) GetSteelStats()
         {
             return (currentSteel, maxSteel);
         }
 
-        public (float current, float max) FoodStats()
+        public (float current, float max) GetFoodStats()
         {
             return (currentFood, maxFood);
         }
 
-        public (float wood, float stone, float steel, float food) CurrentResources()
+        public (float wood, float stone, float steel, float food) GetCurrentResources()
         {
             return (currentWood, currentStone, currentSteel, currentFood);
         }
 
-        public (float wood, float stone, float steel, float food) MaxResources()
+        public (float wood, float stone, float steel, float food) GetMaxResources()
         {
             return (maxWood, maxStone, maxSteel, maxFood);
         }

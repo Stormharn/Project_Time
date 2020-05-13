@@ -124,17 +124,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   buildingName: Head Quarters
-  maxIntergity: 500
-  hasPower: 1
+  maxHealth: 1000
   isPowered: 1
+  requiredPower: 0
   buildingUI: {fileID: 4039423633281500409, guid: f3ee0d8c5016abe45b782d6a073f8440,
     type: 3}
-  goodShieldPrefab: {fileID: 3560191464833158477, guid: 264a053b861312a4db33c19aa03628a6,
-    type: 3}
-  fairShieldPrefab: {fileID: 3560191464833158477, guid: 096bf0eef5175144abbaa17f62fb8423,
-    type: 3}
-  lowShieldPrefab: {fileID: 3560191464833158477, guid: f699f7e6741c91a479db01837f3ca99c,
+  buildCost:
+    wood: 500
+    stone: 500
+    steel: 500
+    food: 500
+  shieldPrefab: {fileID: 9066739483065326283, guid: e6fb31d08ee7b4446992762bc1f2d64e,
     type: 3}
   shieldRegenDelay: 20
   baseShieldMultiplier: 2
   shieldExtendMultiplier: 1
+  startResources: 100
+  startCapacity: 500

@@ -8,27 +8,26 @@ using ProjectTime.Resources;
 
 namespace ProjectTime.UI
 {
-    public class ResourceBuildingUI : BuildingUI
+    public class PowerGeneratorBuildingUI : BuildingUI
     {
         [SerializeField] TextMeshProUGUI nameUI;
         [SerializeField] Slider integrityUI;
         [SerializeField] TextMeshProUGUI integrityTextUI;
-        [SerializeField] TextMeshProUGUI typeUI;
-        [SerializeField] TextMeshProUGUI amountUI;
 
-        ResourceBuilding targetBuilding;
+        PowerGenerator targetBuilding;
 
         private void Start()
         {
             player = GameObject.FindObjectOfType<Player>();
             closeButton.onClick.AddListener(CloseOnClick);
             deleteBuildingButton.onClick.AddListener(DeleteBuilding);
+            togglePowerButton.onClick.AddListener(TogglePower);
         }
 
         public override void DeleteBuilding()
         {
-            GameObject.FindObjectOfType<ResourceManager>().Refund(targetBuilding.BuildCost, .5f);
-            targetBuilding.Remove();
+            ResourceManager.Instance.Refund(targetBuilding.BuildCost, .5f);
+            targetBuilding.Remove(false);
         }
 
         private void CloseOnClick()
@@ -36,21 +35,24 @@ namespace ProjectTime.UI
             player.CloseUI();
         }
 
+        public void TogglePower()
+        {
+            targetBuilding.GeneratorPowerToggle();
+        }
+
         public override void SetTarget(GameObject target)
         {
-            targetBuilding = (ResourceBuilding)target.GetComponent<Building>();
+            targetBuilding = (PowerGenerator)target.GetComponent<Building>();
         }
 
         private void OnGUI()
         {
             nameUI.text = targetBuilding.BuildingName;
-            integrityTextUI.text = targetBuilding.Integrity.ToString();
-            integrityUI.maxValue = targetBuilding.MaxIntergity;
-            integrityUI.value = targetBuilding.Integrity;
-            typeUI.text = targetBuilding.ResourceType.ToString();
-            amountUI.text = string.Format("{0:0} / {1:0}",
-                            targetBuilding.CurrentResourceAmount.ToString(),
-                            targetBuilding.ResourceCapacity.ToString());
+            integrityTextUI.text = targetBuilding.Health.ToString();
+            integrityUI.maxValue = targetBuilding.MaxHealth;
+            integrityUI.value = targetBuilding.Health;
+            powerText.text = targetBuilding.IsPowered.ToString();
+
         }
     }
 }

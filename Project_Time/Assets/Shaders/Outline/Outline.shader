@@ -115,7 +115,7 @@
                 }
 
                 //output the scene's color, plus our outline strength in teal.
-                half4 color= tex2D(_SceneTex,i.uvs.xy)+ColorIntensityInRadius*half4(1,1,1,1);
+                half4 color= tex2D(_SceneTex,i.uvs.xy)+ColorIntensityInRadius*half4(50, 50, 50, 50);
                 return color;
             }
              

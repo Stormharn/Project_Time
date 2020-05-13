@@ -3,6 +3,7 @@ using TMPro;
 using UnityEngine.UI;
 using ProjectTime.Build;
 using System;
+using ProjectTime.HexGrid;
 
 namespace ProjectTime.UI
 {
@@ -31,7 +32,7 @@ namespace ProjectTime.UI
 
         private void Clicked()
         {
-            buildable.Build();
+            buildable.SetBuildable();
         }
 
         private void OnEnable()

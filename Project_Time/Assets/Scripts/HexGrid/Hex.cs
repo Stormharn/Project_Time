@@ -10,13 +10,13 @@ namespace ProjectTime.HexGrid
         private const float radiusRatio = 0.866025404f;
 
         public static Vector3[] corners = {
-        new Vector3(0f, 0f, outerRadius),
-        new Vector3(innerRadius, 0f, 0.5f * outerRadius),
-        new Vector3(innerRadius, 0f, -0.5f * outerRadius),
-        new Vector3(0f, 0f, -outerRadius),
-        new Vector3(-innerRadius, 0f, -0.5f * outerRadius),
-        new Vector3(-innerRadius, 0f, 0.5f * outerRadius),
-        new Vector3(0f, 0f, outerRadius)
+        new Vector3(0f, 0f, outerRadius - .25f),
+        new Vector3(innerRadius - .25f, 0f, 0.5f * outerRadius - .25f),
+        new Vector3(innerRadius - .25f, 0f, -0.5f * outerRadius + .25f),
+        new Vector3(0f, 0f, -outerRadius + .25f),
+        new Vector3(-innerRadius + .25f, 0f, -0.5f * outerRadius + .25f),
+        new Vector3(-innerRadius + .25f, 0f, 0.5f * outerRadius - .25f),
+        new Vector3(0f, 0f, outerRadius - .25f)
         };
     }
 }

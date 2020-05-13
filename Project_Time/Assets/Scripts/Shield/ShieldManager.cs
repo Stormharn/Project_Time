@@ -1,22 +1,43 @@
 using System;
 using UnityEngine;
 using ProjectTime.Build;
+using System.Collections.Generic;
 
 namespace ProjectTime.Shielding
 {
-    public class ShieldManager : MonoBehaviour
+    public sealed class ShieldManager
     {
-        public event Action onRegenShields;
+        private static readonly ShieldManager instance = new ShieldManager();
+        private static List<ShieldGenerator> shieldGenerators;
 
-        public void RegisterNewGenerator(ShieldGenerator newGenerator)
+        static ShieldManager()
         {
-            newGenerator.onRemoveShield += TriggerRegen;
+            shieldGenerators = new List<ShieldGenerator>();
+        }
+
+        private ShieldManager() { }
+
+        public static ShieldManager Instance
+        {
+            get { return instance; }
+        }
+
+        public void AddGenerator(ShieldGenerator newGenerator)
+        {
+            shieldGenerators.Add(newGenerator);
+        }
+
+        public void RemoveGenerator(ShieldGenerator generator)
+        {
+            shieldGenerators.Remove(generator);
         }
 
         public void TriggerRegen()
         {
-            if (onRegenShields != null)
-                onRegenShields();
+            foreach (var generator in shieldGenerators)
+            {
+                generator.RegenerateShields();
+            }
         }
     }
 }

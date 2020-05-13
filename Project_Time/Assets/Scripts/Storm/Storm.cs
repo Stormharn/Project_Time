@@ -13,16 +13,16 @@ namespace ProjectTime.Storm
         [SerializeField] float damageTime;
         [SerializeField] float eddySpawnPercentChance;
         [SerializeField] Eddy eddyPrefab;
+        [SerializeField] EddyWarning eddyWarningPrefab;
         [SerializeField] float newEddyTime;
         [SerializeField] float initialPeaceTime;
+        [SerializeField] float eddyWarningTime;
         WaitForSeconds stormDamageTimer;
         WaitForSeconds initialPeaceTimer;
-        HexManager hexManager;
         bool createdEddy = false;
 
         private void Start()
         {
-            hexManager = GameObject.FindObjectOfType<HexManager>();
             initialPeaceTimer = new WaitForSeconds(initialPeaceTime);
             stormDamageTimer = new WaitForSeconds(damageTime);
             StartCoroutine(nameof(TemporalStorm));
@@ -39,7 +39,10 @@ namespace ProjectTime.Storm
                 createdEddy = false;
                 if (UnityEngine.Random.Range(1f, 100f) < eddySpawnPercentChance)
                 {
-                    Instantiate(eddyPrefab, hexManager.RandomCell().transform.position, Quaternion.identity, transform);
+                    var position = HexManager.Instance.RandomCell().transform.position;
+                    var direction = Instantiate(eddyWarningPrefab, position, Quaternion.identity, transform).InitializeWarning(eddyWarningTime);
+                    yield return new WaitForSeconds(eddyWarningTime);
+                    Instantiate(eddyPrefab, position, Quaternion.identity, transform).InitializeEddy(direction);
                     createdEddy = true;
                 }
 

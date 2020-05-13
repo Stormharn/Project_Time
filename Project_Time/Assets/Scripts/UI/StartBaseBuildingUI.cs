@@ -28,12 +28,12 @@ namespace ProjectTime.UI
 
         private void ShrinkShields()
         {
-            targetBuilding.ChangeShieldLevel(-1);
+            targetBuilding.ReduceShields();
         }
 
         private void ExpandShields()
         {
-            targetBuilding.ChangeShieldLevel(1);
+            targetBuilding.ExpandShields();
         }
 
         private void CloseOnClick()
@@ -49,9 +49,10 @@ namespace ProjectTime.UI
         private void OnGUI()
         {
             nameUI.text = targetBuilding.BuildingName;
-            integrityTextUI.text = targetBuilding.Integrity.ToString();
-            integrityUI.maxValue = targetBuilding.MaxIntergity;
-            integrityUI.value = targetBuilding.Integrity;
+            integrityTextUI.text = targetBuilding.Health.ToString();
+            integrityUI.maxValue = targetBuilding.MaxHealth;
+            integrityUI.value = targetBuilding.Health;
+            powerText.text = targetBuilding.IsPowered.ToString();
         }
 
         public override void DeleteBuilding()

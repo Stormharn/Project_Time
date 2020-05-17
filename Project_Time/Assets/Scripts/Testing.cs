@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using ProjectTime.Population;
 using UnityEngine;
 
 public class Testing : MonoBehaviour
@@ -17,6 +18,14 @@ public class Testing : MonoBehaviour
         {
             ProjectTime.Resources.ResourceManager.Instance.AddMaxResourceAll(1000);
             ProjectTime.Resources.ResourceManager.Instance.AddResourceAll(1000);
+        }
+        if (Input.GetKeyDown(KeyCode.F2))
+        {
+            PopulationManager.Instance.CreatePopulation();
+        }
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            Application.Quit();
         }
     }
     #endregion

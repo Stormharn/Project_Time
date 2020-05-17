@@ -1,10 +1,7 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using ProjectTime.Build;
-using UnityEngine.EventSystems;
+﻿using UnityEngine;
 using UnityEngine.UI;
-using System;
+using UnityEngine.EventSystems;
+using ProjectTime.Build;
 using ProjectTime.HexGrid;
 using ProjectTime.UI;
 using ProjectTime.Shielding;
@@ -15,7 +12,7 @@ namespace ProjectTime.Core
     {
         // Declarations
         #region Declarations
-        [SerializeField] StartBase startBasePrefab;
+        [SerializeField] Bunker HQPrefab;
         [SerializeField] Image mainUI;
         [SerializeField] Image buildUI;
         [SerializeField] Image shieldUI;
@@ -39,8 +36,8 @@ namespace ProjectTime.Core
         private void Start()
         {
             var homeCell = HexManager.Instance.ClosestCell(Vector3.zero);
-            var startingBase = Instantiate(startBasePrefab, homeCell.transform.position, Quaternion.identity, transform);
-            startingBase.Build(homeCell);
+            var startingBase = Instantiate(HQPrefab, homeCell.transform.position, Quaternion.identity, transform);
+            startingBase.InitialBuilding(homeCell);
         }
 
         private void Update()

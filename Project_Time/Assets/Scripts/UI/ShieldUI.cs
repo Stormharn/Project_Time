@@ -1,8 +1,7 @@
-using System;
-using ProjectTime.Shielding;
 using UnityEngine;
-using TMPro;
 using UnityEngine.UI;
+using TMPro;
+using ProjectTime.Shielding;
 
 namespace ProjectTime.UI
 {
@@ -22,7 +21,10 @@ namespace ProjectTime.UI
         private void OnGUI()
         {
             shieldLevelUI.text = targetShield.ShieldStatus.ToString();
-            shieldStrengthTextUI.text = targetShield.ShieldHealth.ToString();
+            var healthString = targetShield.ShieldHealth.ToString();
+            if (healthString.Length > 4)
+                healthString = healthString.Substring(0, 4);
+            shieldStrengthTextUI.text = healthString;
             shieldStrengthUI.maxValue = targetShield.BaseShieldHealth;
             shieldStrengthUI.value = targetShield.ShieldHealth;
         }

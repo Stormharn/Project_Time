@@ -1,6 +1,5 @@
-using System;
-using ProjectTime.Shielding;
 using UnityEngine;
+using ProjectTime.Shielding;
 
 namespace ProjectTime.Storm
 {
@@ -8,17 +7,16 @@ namespace ProjectTime.Storm
     {
         [SerializeField] float movementSpeed = 1f;
         [SerializeField] float damage;
+        [SerializeField] float intensifyScale = .1f;
+        [SerializeField] float intensifyDamage = 1.25f;
         Transform myTranform;
         MovementDirections randomDirection;
 
-        private void Start()
+        public void InitializeEddy(MovementDirections direction, int count)
         {
             myTranform = transform;
-        }
-
-        public void InitializeEddy(MovementDirections direction)
-        {
             randomDirection = direction;
+            Intensify(count);
         }
 
         private void Update()
@@ -29,9 +27,22 @@ namespace ProjectTime.Storm
         private void OnTriggerEnter(Collider other)
         {
             if (other.tag == UnityTags.Shield.ToString())
+            {
                 other.GetComponent<Shield>().TakeDamage(damage);
+                damage *= .5f;
+            }
             else if (other.tag == UnityTags.KillBox.ToString())
                 Destroy(gameObject);
+        }
+
+        public void Intensify(int count)
+        {
+            var newScale = myTranform.localScale;
+            newScale.x = newScale.x + (count * intensifyScale);
+            newScale.z = newScale.z + (count * intensifyScale);
+
+            damage *= intensifyDamage * count;
+            transform.localScale = newScale;
         }
     }
 }

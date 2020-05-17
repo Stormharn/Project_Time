@@ -1,7 +1,7 @@
 using System;
-using ProjectTime.HexGrid;
 using UnityEngine;
 using UnityEngine.UI;
+using ProjectTime.HexGrid;
 
 namespace ProjectTime.Resources
 {

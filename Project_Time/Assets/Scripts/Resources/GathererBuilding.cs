@@ -1,14 +1,15 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
-using ProjectTime.HexGrid;
 using UnityEngine;
+using ProjectTime.HexGrid;
 using ProjectTime.Build;
 using ProjectTime.Core;
+using ProjectTime.Power;
+using ProjectTime.Population;
 
 namespace ProjectTime.Resources
 {
-    public class GathererBuilding : Building, IBuildable
+    public class GathererBuilding : Building
     {
         [SerializeField] ResourceTypes resourceType;
         [SerializeField] float resourceCapacity = 100f;
@@ -58,7 +59,7 @@ namespace ProjectTime.Resources
             while (true)
             {
                 yield return gatherDelay;
-                if (gatherableResources.Count > 0)
+                if (gatherableResources.Count > 0 && isWorking)
                 {
                     foreach (var resource in removeResources)
                     {
@@ -87,6 +88,8 @@ namespace ProjectTime.Resources
                 return ResourceManager.Instance.GetStoneStats();
             else if (type == ResourceTypes.Steel)
                 return ResourceManager.Instance.GetSteelStats();
+            else if (type == ResourceTypes.Food)
+                return ResourceManager.Instance.GetFoodStats();
 
             return (0, 0);
         }
@@ -98,17 +101,18 @@ namespace ProjectTime.Resources
 
         public override void Cleanup()
         {
+            KillCitizens(myWorkers);
             ResourceManager.Instance.LowerMaxResource(resourceType, resourceCapacity);
         }
 
         public override void PowerUp()
         {
-
+            hasPower = true;
         }
 
         public override void PowerDown()
         {
-
+            hasPower = false;
         }
 
         public override void Build(HexCell hexCell)
@@ -116,7 +120,13 @@ namespace ProjectTime.Resources
             hexCell.AddBuilding(this);
             myCell = hexCell;
             health = maxHealth;
-            isPowered = true;
+            if (PopulationManager.Instance.AvailablePopulation() > 0)
+            {
+                var myCitizen = PopulationManager.Instance.GetAvailableCitizen();
+                myWorkers.Add(myCitizen);
+                PopulationManager.Instance.ToWork(myCitizen);
+                isWorking = true;
+            }
             hasPower = hexCell.HasPower;
             PowerGrid.Instance.UpdatePowerGrid();
             ResourceManager.Instance.AddMaxResource(resourceType, ResourceCapacity);
@@ -132,44 +142,10 @@ namespace ProjectTime.Resources
             Destroy(this.gameObject);
         }
 
-        public override void TogglePowered()
+        public override void ToggleWorking()
         {
-            isPowered = !isPowered;
+            isWorking = !isWorking;
             PowerGrid.Instance.UpdatePowerGrid();
-        }
-
-        public override void TakeDamage(float damage)
-        {
-            health -= damage;
-            if (health <= 0)
-                Remove(true);
-        }
-
-        public override void Repair(float healing)
-        {
-            health += healing;
-            if (health > maxHealth)
-                health = maxHealth;
-        }
-
-        public override bool IsShielded()
-        {
-            return myCell.HasShield;
-        }
-
-        public BuildCost GetBuildCost()
-        {
-            return buildCost;
-        }
-
-        public bool isBuildable()
-        {
-            return ResourceManager.Instance.CanAffordToBuild(buildCost);
-        }
-
-        public void SetBuildable()
-        {
-            GameObject.FindObjectOfType<BuildingSpawner>().SelectBuildingType(this);
         }
     }
 }

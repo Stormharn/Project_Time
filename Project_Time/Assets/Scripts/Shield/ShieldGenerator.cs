@@ -5,29 +5,26 @@ using ProjectTime.Build;
 using ProjectTime.HexGrid;
 using ProjectTime.Resources;
 using ProjectTime.Core;
-using System;
+using ProjectTime.Power;
+using ProjectTime.Population;
 
 namespace ProjectTime.Shielding
 {
-    public class ShieldGenerator : Building, IBuildable
+    public class ShieldGenerator : Building
     {
         [SerializeField] Shield shieldPrefab;
         [SerializeField] float shieldRegenDelay = 20f;
         [SerializeField] int baseShieldMultiplier = 1;
         [SerializeField] int shieldExtendMultiplier = 1;
+        [SerializeField] float cooldownTime = 5f;
         List<HexCell> cellsInRange = new List<HexCell>();
         [Range(0, 2)] int shieldExtendLevel = 0;
         WaitForSeconds regenTime;
+        float cooldownTimer;
 
         public int ShieldExtendLevel { get => shieldExtendLevel; }
         public int BaseShieldMultiplier { get => baseShieldMultiplier; }
         public int ShieldExtendMultiplier { get => shieldExtendMultiplier; }
-
-        private void OnEnable()
-        {
-            regenTime = new WaitForSeconds(shieldRegenDelay);
-            ShieldManager.Instance.AddGenerator(this);
-        }
 
         private void OnDisable()
         {
@@ -40,11 +37,33 @@ namespace ProjectTime.Shielding
             hexCell.AddBuilding(this);
             myCell = hexCell;
             health = maxHealth;
-            isPowered = true;
+            if (PopulationManager.Instance.AvailablePopulation() > 0)
+            {
+                var myCitizen = PopulationManager.Instance.GetAvailableCitizen();
+                myWorkers.Add(myCitizen);
+                PopulationManager.Instance.ToWork(myCitizen);
+                isWorking = true;
+            }
             hasPower = hexCell.HasPower;
+            regenTime = new WaitForSeconds(shieldRegenDelay);
+            cooldownTimer = Time.time;
+            ShieldManager.Instance.AddGenerator(this);
             PowerGrid.Instance.UpdatePowerGrid();
-            if (hasPower && isPowered)
+            if (hasPower && isWorking)
                 GenerateShields();
+            StartCoroutine(nameof(PeriodicRegen));
+        }
+
+        public void InitializeStartBase(HexCell hexCell, Building newParent)
+        {
+            myCell = hexCell;
+            isSubBuilding = true;
+            parent = newParent;
+            isWorking = false;
+            hasPower = parent.HasPower;
+            regenTime = new WaitForSeconds(shieldRegenDelay);
+            cooldownTimer = Time.time;
+            ShieldManager.Instance.AddGenerator(this);
             StartCoroutine(nameof(PeriodicRegen));
         }
 
@@ -89,7 +108,7 @@ namespace ProjectTime.Shielding
             }
         }
 
-        internal IEnumerator PeriodicRegen()
+        public IEnumerator PeriodicRegen()
         {
             while (true)
             {
@@ -100,7 +119,7 @@ namespace ProjectTime.Shielding
 
         public void RegenerateShields()
         {
-            if (hasPower && isPowered)
+            if (hasPower && isWorking)
             {
                 LowerShields();
                 GenerateShields();
@@ -109,16 +128,25 @@ namespace ProjectTime.Shielding
 
         public void ExpandShields()
         {
+            if (isOnCooldown()) { return; }
             if (shieldExtendLevel >= 2) { return; }
             shieldExtendLevel++;
             RegenerateShields();
+            cooldownTimer = Time.time;
         }
 
         public void ReduceShields()
         {
+            if (isOnCooldown()) { return; }
             if (shieldExtendLevel <= 0) { return; }
             shieldExtendLevel--;
             RegenerateShields();
+            cooldownTimer = Time.time;
+        }
+
+        public bool isOnCooldown()
+        {
+            return Time.time - cooldownTimer < cooldownTime;
         }
 
         public ShieldStatus GetShieldStatus()
@@ -134,62 +162,41 @@ namespace ProjectTime.Shielding
             Destroy(this.gameObject);
         }
 
-        public override void TogglePowered()
+        public override void ToggleWorking()
         {
-            if (isPowered)
+            if (isWorking)
+            {
                 LowerShields();
+                isWorking = !isWorking;
+                PowerGrid.Instance.UpdatePowerGrid();
+            }
             else
-                GenerateShields();
-            isPowered = !isPowered;
-            PowerGrid.Instance.UpdatePowerGrid();
-        }
-
-        public override void TakeDamage(float damage)
-        {
-            health -= damage;
-            if (health <= 0)
-                Remove(true);
-        }
-
-        public override void Repair(float healing)
-        {
-            health += healing;
-            if (health > maxHealth)
-                health = maxHealth;
-        }
-
-        public override bool IsShielded()
-        {
-            return myCell.HasShield;
-        }
-
-        public BuildCost GetBuildCost()
-        {
-            return buildCost;
-        }
-
-        public bool isBuildable()
-        {
-            return ResourceManager.Instance.CanAffordToBuild(buildCost);
-        }
-
-        public void SetBuildable()
-        {
-            GameObject.FindObjectOfType<BuildingSpawner>().SelectBuildingType(this);
+            {
+                if (myWorkers.Count > 0)
+                {
+                    GenerateShields();
+                    isWorking = !isWorking;
+                    PowerGrid.Instance.UpdatePowerGrid();
+                }
+            }
         }
 
         public override void Cleanup()
         {
             LowerShields();
+            KillCitizens(myWorkers);
         }
 
         public override void PowerUp()
         {
-            GenerateShields();
+            hasPower = true;
+            if (isWorking)
+                GenerateShields();
         }
 
         public override void PowerDown()
         {
+            hasPower = false;
             LowerShields();
         }
     }

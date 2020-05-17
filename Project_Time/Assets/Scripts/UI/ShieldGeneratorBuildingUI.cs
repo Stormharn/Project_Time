@@ -1,9 +1,8 @@
 using UnityEngine;
-using TMPro;
 using UnityEngine.UI;
+using TMPro;
 using ProjectTime.Build;
 using ProjectTime.Core;
-using System;
 using ProjectTime.Shielding;
 using ProjectTime.Resources;
 
@@ -11,9 +10,6 @@ namespace ProjectTime.UI
 {
     public class ShieldGeneratorBuildingUI : BuildingUI
     {
-        [SerializeField] TextMeshProUGUI nameUI;
-        [SerializeField] Slider integrityUI;
-        [SerializeField] TextMeshProUGUI integrityTextUI;
         [SerializeField] Button expandShieldButton;
         [SerializeField] Button shrinkShieldButton;
 
@@ -21,22 +17,16 @@ namespace ProjectTime.UI
 
         private void Start()
         {
-            player = GameObject.FindObjectOfType<Player>();
-            closeButton.onClick.AddListener(CloseOnClick);
+            Setup();
             expandShieldButton.onClick.AddListener(ExpandShields);
             shrinkShieldButton.onClick.AddListener(ShrinkShields);
-            deleteBuildingButton.onClick.AddListener(DeleteBuilding);
-            togglePowerButton.onClick.AddListener(TogglePower);
-        }
-
-        private void TogglePower()
-        {
-            targetBuilding.TogglePowered();
         }
 
         public override void DeleteBuilding()
         {
             ResourceManager.Instance.Refund(targetBuilding.BuildCost, .5f);
+            var curCitizens = targetBuilding.GetCitizens();
+            targetBuilding.RemovePopulation(curCitizens.Count);
             targetBuilding.Remove(false);
         }
 
@@ -51,11 +41,6 @@ namespace ProjectTime.UI
             targetBuilding.ExpandShields();
         }
 
-        private void CloseOnClick()
-        {
-            player.CloseUI();
-        }
-
         public override void SetTarget(GameObject target)
         {
             targetBuilding = (ShieldGenerator)target.GetComponent<Building>();
@@ -63,11 +48,32 @@ namespace ProjectTime.UI
 
         private void OnGUI()
         {
-            nameUI.text = targetBuilding.BuildingName;
-            integrityTextUI.text = targetBuilding.Health.ToString();
-            integrityUI.maxValue = targetBuilding.MaxHealth;
-            integrityUI.value = targetBuilding.Health;
-            powerText.text = targetBuilding.IsPowered.ToString();
+            DrawGUI(targetBuilding);
+            if (targetBuilding.isOnCooldown())
+            {
+                expandShieldButton.interactable = false;
+                shrinkShieldButton.interactable = false;
+            }
+            else
+            {
+                expandShieldButton.interactable = true;
+                shrinkShieldButton.interactable = true;
+            }
+        }
+
+        public override void ToggleWorking()
+        {
+            targetBuilding.ToggleWorking();
+        }
+
+        public override void AddPopulation()
+        {
+            targetBuilding.AddPopulation(1);
+        }
+
+        public override void RemovePopulation()
+        {
+            targetBuilding.RemovePopulation(1);
         }
     }
 }

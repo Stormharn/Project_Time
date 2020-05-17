@@ -1,6 +1,6 @@
-using ProjectTime.Resources;
 using UnityEngine;
 using TMPro;
+using ProjectTime.Resources;
 
 namespace ProjectTime.UI
 {

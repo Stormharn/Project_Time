@@ -1,8 +1,8 @@
 using UnityEngine;
+using UnityEngine.UI;
 using TMPro;
 using ProjectTime.Resources;
 using ProjectTime.Core;
-using UnityEngine.UI;
 
 namespace ProjectTime.UI
 {

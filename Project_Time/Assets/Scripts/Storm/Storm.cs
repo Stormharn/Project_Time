@@ -1,9 +1,7 @@
-using System;
 using System.Collections;
-using System.Collections.Generic;
+using UnityEngine;
 using ProjectTime.Build;
 using ProjectTime.HexGrid;
-using UnityEngine;
 
 namespace ProjectTime.Storm
 {
@@ -17,6 +15,10 @@ namespace ProjectTime.Storm
         [SerializeField] float newEddyTime;
         [SerializeField] float initialPeaceTime;
         [SerializeField] float eddyWarningTime;
+        [SerializeField] float intensifyTime = 300f;
+        [SerializeField] float intensifyDamage = 1.25f;
+        [SerializeField] float intensifyDamageTime = .9f;
+        int intensifyCount;
         WaitForSeconds stormDamageTimer;
         WaitForSeconds initialPeaceTimer;
         bool createdEddy = false;
@@ -27,6 +29,20 @@ namespace ProjectTime.Storm
             stormDamageTimer = new WaitForSeconds(damageTime);
             StartCoroutine(nameof(TemporalStorm));
             StartCoroutine(nameof(TemporalEddy));
+            StartCoroutine(nameof(StormIntensify));
+        }
+
+        private IEnumerator StormIntensify()
+        {
+            while (true)
+            {
+                yield return new WaitForSeconds(intensifyTime);
+                stormDamage *= intensifyDamage;
+                damageTime *= intensifyDamageTime;
+                newEddyTime *= intensifyDamageTime;
+                stormDamageTimer = new WaitForSeconds(damageTime);
+                intensifyCount++;
+            }
         }
 
         private IEnumerator TemporalEddy()
@@ -39,10 +55,7 @@ namespace ProjectTime.Storm
                 createdEddy = false;
                 if (UnityEngine.Random.Range(1f, 100f) < eddySpawnPercentChance)
                 {
-                    var position = HexManager.Instance.RandomCell().transform.position;
-                    var direction = Instantiate(eddyWarningPrefab, position, Quaternion.identity, transform).InitializeWarning(eddyWarningTime);
-                    yield return new WaitForSeconds(eddyWarningTime);
-                    Instantiate(eddyPrefab, position, Quaternion.identity, transform).InitializeEddy(direction);
+                    StartCoroutine(nameof(NewEddy));
                     createdEddy = true;
                 }
 
@@ -54,6 +67,14 @@ namespace ProjectTime.Storm
                 else
                     yield return new WaitForSeconds(newEddyTime / (2 * loopsSinceLastEddy));
             }
+        }
+
+        private IEnumerator NewEddy()
+        {
+            var position = HexManager.Instance.RandomCell().transform.position;
+            var direction = Instantiate(eddyWarningPrefab, position, Quaternion.identity, transform).InitializeWarning(eddyWarningTime, intensifyCount);
+            yield return new WaitForSeconds(eddyWarningTime);
+            Instantiate(eddyPrefab, position, Quaternion.identity, transform).InitializeEddy(direction, intensifyCount);
         }
 
         private IEnumerator TemporalStorm()

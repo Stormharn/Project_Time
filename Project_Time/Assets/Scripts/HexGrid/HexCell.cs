@@ -1,11 +1,10 @@
-﻿using UnityEngine;
-using UnityEngine.UI;
+﻿using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.EventSystems;
 using ProjectTime.Build;
 using ProjectTime.Resources;
 using ProjectTime.Shielding;
-using UnityEngine.EventSystems;
-using System;
-using System.Collections.Generic;
+using ProjectTime.Power;
 
 namespace ProjectTime.HexGrid
 {

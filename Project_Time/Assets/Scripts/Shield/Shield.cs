@@ -1,9 +1,6 @@
-using System;
 using System.Collections.Generic;
-using ProjectTime.Build;
-using ProjectTime.Core;
-using ProjectTime.HexGrid;
 using UnityEngine;
+using ProjectTime.HexGrid;
 
 namespace ProjectTime.Shielding
 {
@@ -17,10 +14,7 @@ namespace ProjectTime.Shielding
         LinkedList<ShieldGenerator> generatedBy = new LinkedList<ShieldGenerator>();
         float shieldHealth;
         HexCell myHexCell = null;
-        ShieldGenerator myParent = null;
-        bool isBase = false;
 
-        public bool IsBase { get => isBase; }
         public float ShieldHealth { get => shieldHealth; }
         public ShieldStatus ShieldStatus { get => status; }
         public int BaseShieldHealth { get => baseShieldHealth; }

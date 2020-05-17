@@ -13,6 +13,7 @@ TagManager:
   - MainUI
   - Shield
   - KillBox
+  - Bunker
   layers:
   - Default
   - TransparentFX

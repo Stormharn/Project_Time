@@ -45,6 +45,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   movementSpeed: 1
+  intensifyScale: 0.25
 --- !u!1 &1742799548266167651
 GameObject:
   m_ObjectHideFlags: 0

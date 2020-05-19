@@ -47,6 +47,7 @@ namespace ProjectTime.Shielding
             hasPower = hexCell.HasPower;
             regenTime = new WaitForSeconds(shieldRegenDelay);
             cooldownTimer = Time.time;
+            audioSource = GetComponent<AudioSource>();
             ShieldManager.Instance.AddGenerator(this);
             PowerGrid.Instance.UpdatePowerGrid();
             if (hasPower && isWorking)
@@ -54,7 +55,7 @@ namespace ProjectTime.Shielding
             StartCoroutine(nameof(PeriodicRegen));
         }
 
-        public void InitializeStartBase(HexCell hexCell, Building newParent)
+        public void InitializeStartBase(HexCell hexCell, Bunker newParent)
         {
             myCell = hexCell;
             isSubBuilding = true;
@@ -65,6 +66,8 @@ namespace ProjectTime.Shielding
             cooldownTimer = Time.time;
             ShieldManager.Instance.AddGenerator(this);
             StartCoroutine(nameof(PeriodicRegen));
+            // if (!newParent.IsHomeBase)
+            newParent.AddPopulation(1);
         }
 
         internal void GenerateShields()

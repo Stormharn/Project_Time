@@ -79,7 +79,7 @@ Material:
     - _Enablenoise: 0
     - _Enablepulsation: 0
     - _Extraroughness: 0
-    - _Globalopacity: 1
+    - _Globalopacity: 0.7
     - _GlossMapScale: 1
     - _Glossiness: 0.5
     - _GlossyReflections: 1
@@ -91,7 +91,7 @@ Material:
     - _Mode: 0
     - _Noisescale: 50
     - _OcclusionStrength: 1
-    - _Outerfresnelintensity: 1
+    - _Outerfresnelintensity: 0.35
     - _Parallax: 0.02
     - _Power: 1.25
     - _Pulseamplitude: 1
@@ -113,9 +113,9 @@ Material:
     - __dirty: 1
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
-    - _Edgecolor: {r: 0.09518514, g: 0.8773585, b: 0.10944506, a: 0.666}
+    - _Edgecolor: {r: 0.77265173, g: 7.0274515, b: 0.88303053, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
-    - _Maincolor: {r: 0.02990388, g: 0.3018868, b: 0.057136513, a: 0.666}
+    - _Maincolor: {r: 4, g: 4, b: 4, a: 0.666}
     - _Mainpanningspeed: {r: 0.025, g: 0.05, b: 0.05, a: 1}
     - _Noisespeed: {r: 0, g: 0, b: 0, a: 0}
     - _Secondarycolor: {r: 0.06768423, g: 0.3679245, b: 0.10091099, a: 0}

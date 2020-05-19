@@ -18,6 +18,8 @@ namespace ProjectTime.Storm
         [SerializeField] float intensifyTime = 300f;
         [SerializeField] float intensifyDamage = 1.25f;
         [SerializeField] float intensifyDamageTime = .9f;
+        [SerializeField] float intensifyStormParticles = 1.1f;
+        [SerializeField] ParticleSystem[] particleSystems;
         int intensifyCount;
         WaitForSeconds stormDamageTimer;
         WaitForSeconds initialPeaceTimer;
@@ -42,6 +44,16 @@ namespace ProjectTime.Storm
                 newEddyTime *= intensifyDamageTime;
                 stormDamageTimer = new WaitForSeconds(damageTime);
                 intensifyCount++;
+                foreach (var particleSystem in particleSystems)
+                {
+                    var emissionModule = particleSystem.emission;
+                    float curEmissionsMin = emissionModule.rateOverTime.constantMin;
+                    float curEmissionsMax = emissionModule.rateOverTime.constantMax;
+                    var minMax = emissionModule.rateOverTime;
+                    minMax.constantMin = curEmissionsMin * intensifyStormParticles;
+                    minMax.constantMax = curEmissionsMax * intensifyStormParticles;
+                    emissionModule.rateOverTime = minMax;
+                }
             }
         }
 

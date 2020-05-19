@@ -130,6 +130,7 @@ namespace ProjectTime.Resources
             hasPower = hexCell.HasPower;
             PowerGrid.Instance.UpdatePowerGrid();
             ResourceManager.Instance.AddMaxResource(resourceType, ResourceCapacity);
+            audioSource = GetComponent<AudioSource>();
             FindNearbyResources();
             StartCoroutine(nameof(GatherResources));
         }
@@ -144,8 +145,11 @@ namespace ProjectTime.Resources
 
         public override void ToggleWorking()
         {
-            isWorking = !isWorking;
-            PowerGrid.Instance.UpdatePowerGrid();
+            if ((myWorkers.Count > 0 && !isWorking) || isWorking)
+            {
+                isWorking = !isWorking;
+                PowerGrid.Instance.UpdatePowerGrid();
+            }
         }
     }
 }

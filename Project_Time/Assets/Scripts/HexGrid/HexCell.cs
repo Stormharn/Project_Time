@@ -30,7 +30,7 @@ namespace ProjectTime.HexGrid
 
         private void Start()
         {
-            GetComponent<MeshFilter>().mesh = GameObject.FindObjectOfType<HexMesh>().hexMesh;
+            // GetComponent<MeshFilter>().mesh = GameObject.FindObjectOfType<HexMesh>().hexMesh;
             myCollider = GetComponent<MeshCollider>();
 
             myCollider.sharedMesh = GetComponent<MeshFilter>().mesh;

@@ -30,15 +30,14 @@ namespace ProjectTime.Resources
         {
             homeBase = HexManager.Instance.ClosestCell(Vector3.zero);
             var hexCells = HexManager.Instance.NearestCells(Vector3.zero, 2);
-            foreach (var cell in hexCells)
+            foreach (var resource in resourceTypes)
             {
-                if (Random.Range(1f, 100f) < 10 && cell != homeBase)
+                var thisCell = hexCells[Random.Range(0, hexCells.Count)];
+                while (thisCell == homeBase || !thisCell.IsAvailable)
                 {
-                    curResource = GetRandomWeightedResource();
-                    var hexCell = cell.GetComponent<HexCell>();
-                    if (hexCell.IsAvailable)
-                        curResource.Spawn(hexCell.transform, resourceParent, hexCell);
+                    thisCell = hexCells[Random.Range(0, hexCells.Count)];
                 }
+                resource.resourceType.Spawn(thisCell.transform, resourceParent, thisCell);
             }
             hexCells = HexManager.Instance.AllCells();
             foreach (var cell in hexCells)
@@ -46,9 +45,8 @@ namespace ProjectTime.Resources
                 if (Random.Range(1f, 100f) < 15 && cell != homeBase && cell.IsAvailable)
                 {
                     curResource = GetRandomWeightedResource();
-                    var hexCell = cell.GetComponent<HexCell>();
-                    if (hexCell.IsAvailable)
-                        curResource.Spawn(hexCell.transform, resourceParent, hexCell);
+                    if (cell.IsAvailable)
+                        curResource.Spawn(cell.transform, resourceParent, cell);
                 }
             }
         }

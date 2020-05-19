@@ -21,6 +21,7 @@ namespace ProjectTime.Core
         Image activePanel;
         Image previousPanel;
         Camera playerCam;
+
         #endregion
 
         // Unity Methods
@@ -68,6 +69,7 @@ namespace ProjectTime.Core
                     {
                         OpenUI(hexCell.CurrentBuilding.buildingUI);
                         openedPanel.GetComponent<BuildingUI>().SetTarget(hexCell.CurrentBuilding.gameObject);
+                        hexCell.CurrentBuilding.OnSelectionPlayAudio();
                     }
                     else if (hexCell.CurrentResource != null)
                     {

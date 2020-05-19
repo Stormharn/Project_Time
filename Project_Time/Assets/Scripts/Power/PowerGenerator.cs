@@ -98,6 +98,7 @@ namespace ProjectTime.Power
                 isWorking = true;
             }
             hasPower = true;
+            audioSource = GetComponent<AudioSource>();
             cellsInRange = HexManager.Instance.NearestCells(transform.position, generatorRange);
             if (isWorking)
                 PowerUpCells();

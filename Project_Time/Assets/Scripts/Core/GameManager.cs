@@ -12,6 +12,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] int startingResources;
     [SerializeField] int startingResourceCapacity;
     [SerializeField] int startingPopulation;
+    [SerializeField] GameObject gameOverUI;
     #endregion
 
     // Unity Methods
@@ -30,7 +31,10 @@ public class GameManager : MonoBehaviour
     {
         var bunkers = GameObject.FindObjectsOfType<Bunker>();
         if (PopulationManager.Instance.TotalPopulation() == 0 || bunkers.Length == 0)
-            Debug.LogError("Game Over!!");
+        {
+            gameOverUI.gameObject.SetActive(true);
+            gameOverUI.GetComponent<GameOverUI>().GameOver(false);
+        }
     }
     #endregion
 

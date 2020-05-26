@@ -26,6 +26,18 @@ namespace ProjectTime.Resources
             get { return instance; }
         }
 
+        public static void Reinit()
+        {
+            currentFood = 0;
+            currentSteel = 0;
+            currentStone = 0;
+            currentWood = 0;
+            maxFood = 0;
+            maxSteel = 0;
+            maxStone = 0;
+            maxWood = 0;
+        }
+
         public void AddMaxResource(ResourceTypes type, float amount)
         {
             if (type == ResourceTypes.Wood)

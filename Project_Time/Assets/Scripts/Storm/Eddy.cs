@@ -28,8 +28,17 @@ namespace ProjectTime.Storm
         {
             if (other.tag == UnityTags.Shield.ToString())
             {
-                other.GetComponent<Shield>().TakeDamage(damage);
-                damage *= .5f;
+                var shield = other.GetComponent<Shield>();
+                if (damage > shield.ShieldHealth)
+                {
+                    damage -= shield.ShieldHealth;
+                    shield.TakeDamage(shield.ShieldHealth);
+                }
+                else if (damage > 0)
+                {
+                    shield.TakeDamage(damage);
+                    damage = 0;
+                }
             }
             else if (other.tag == UnityTags.KillBox.ToString())
                 Destroy(gameObject);

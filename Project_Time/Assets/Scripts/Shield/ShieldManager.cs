@@ -19,6 +19,11 @@ namespace ProjectTime.Shielding
             get { return instance; }
         }
 
+        public static void Reinit()
+        {
+            shieldGenerators = new List<ShieldGenerator>();
+        }
+
         public void AddGenerator(ShieldGenerator newGenerator)
         {
             shieldGenerators.Add(newGenerator);

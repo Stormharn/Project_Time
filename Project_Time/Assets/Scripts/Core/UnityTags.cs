@@ -10,5 +10,6 @@ public enum UnityTags
     ResourceBuildingUI,
     MainUI,
     Shield,
-    KillBox
+    KillBox,
+    IntroUI
 }

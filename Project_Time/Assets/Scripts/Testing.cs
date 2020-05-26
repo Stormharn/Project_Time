@@ -7,11 +7,18 @@ public class Testing : MonoBehaviour
 {
     // Declarations
     #region Declarations
-
+    GameObject mainUI;
     #endregion
 
     // Unity Methods
     #region Unity Methods
+    private void Start()
+    {
+        Time.timeScale = 0;
+        // mainUI = GameObject.FindGameObjectWithTag(UnityTags.MainUI.ToString());
+        // mainUI.SetActive(false);
+    }
+
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.F1))
@@ -26,6 +33,11 @@ public class Testing : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             Application.Quit();
+        }
+        if (Input.GetKeyDown(KeyCode.Return))
+        {
+            mainUI.SetActive(true);
+            Time.timeScale = 1;
         }
     }
     #endregion

@@ -27,6 +27,14 @@ namespace ProjectTime.Population
             get { return instance; }
         }
 
+        public static void Reinit()
+        {
+            allCitizens = new List<Citizen>();
+            availableCitizens = new List<Citizen>();
+            totalPopulation = 0;
+            workingPopulation = 0;
+            availablePopulation = 0;
+        }
 
         public Citizen CreatePopulation()
         {

@@ -21,6 +21,11 @@ namespace ProjectTime.HexGrid
             get { return instance; }
         }
 
+        public static void Reinit()
+        {
+            cells = new List<HexCell>();
+        }
+
         public void AddHex(HexCell cell)
         {
             cells.Add(cell);

@@ -2,6 +2,7 @@ using System.Collections;
 using UnityEngine;
 using ProjectTime.Build;
 using ProjectTime.HexGrid;
+using System;
 
 namespace ProjectTime.Storm
 {
@@ -20,18 +21,28 @@ namespace ProjectTime.Storm
         [SerializeField] float intensifyDamageTime = .9f;
         [SerializeField] float intensifyStormParticles = 1.1f;
         [SerializeField] ParticleSystem[] particleSystems;
+        [SerializeField] float winTime = 900f;
         int intensifyCount;
         WaitForSeconds stormDamageTimer;
         WaitForSeconds initialPeaceTimer;
+        WaitForSeconds winTimer;
         bool createdEddy = false;
 
         private void Start()
         {
             initialPeaceTimer = new WaitForSeconds(initialPeaceTime);
             stormDamageTimer = new WaitForSeconds(damageTime);
+            winTimer = new WaitForSeconds(winTime);
             StartCoroutine(nameof(TemporalStorm));
             StartCoroutine(nameof(TemporalEddy));
             StartCoroutine(nameof(StormIntensify));
+            StartCoroutine(nameof(GameOver));
+        }
+
+        private IEnumerator GameOver()
+        {
+            yield return winTimer;
+            GameObject.FindObjectOfType<GameManager>().GameOver(true);
         }
 
         private IEnumerator StormIntensify()

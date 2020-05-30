@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
+using System;
 
 public class IntroUI : MonoBehaviour
 {
@@ -11,8 +12,10 @@ public class IntroUI : MonoBehaviour
     [SerializeField] TextMeshProUGUI currentText;
     [SerializeField] Button nextButton;
     [SerializeField] Button playButton;
+    [SerializeField] Button tutorialButton;
     [SerializeField] TextAsset[] expositionTexts;
     [SerializeField] GameObject mainUI;
+    [SerializeField] GameObject tutorialUI;
     int expositionIndex = 0;
     #endregion
 
@@ -23,6 +26,7 @@ public class IntroUI : MonoBehaviour
         Time.timeScale = 0;
         nextButton.onClick.AddListener(Next);
         playButton.onClick.AddListener(Play);
+        tutorialButton.onClick.AddListener(ShowTutorial);
         currentText.text = expositionTexts[expositionIndex].text;
     }
     #endregion
@@ -50,6 +54,12 @@ public class IntroUI : MonoBehaviour
     {
         mainUI.SetActive(true);
         Time.timeScale = 1;
+        gameObject.SetActive(false);
+    }
+
+    private void ShowTutorial()
+    {
+        tutorialUI.gameObject.SetActive(true);
         gameObject.SetActive(false);
     }
     #endregion

@@ -64,9 +64,9 @@ MonoBehaviour:
   buildingUI: {fileID: 960091013106885859, guid: 31218927e2d9e284cb229bf54722f7c5,
     type: 3}
   buildCost:
-    wood: 100
-    stone: 100
-    steel: 100
+    wood: 250
+    stone: 250
+    steel: 250
     food: 0
   shieldPrefab: {fileID: 9066739483065326283, guid: e6fb31d08ee7b4446992762bc1f2d64e,
     type: 3}
@@ -86,7 +86,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 434255a455bb6114b89536ca11d81805, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 1
+  m_Volume: 0.5
   m_Pitch: 1
   Loop: 0
   Mute: 0

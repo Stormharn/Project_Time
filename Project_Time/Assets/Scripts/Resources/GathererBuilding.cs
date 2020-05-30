@@ -59,6 +59,7 @@ namespace ProjectTime.Resources
             while (true)
             {
                 yield return gatherDelay;
+                gatherRate = GetCitizens().Count;
                 if (gatherableResources.Count > 0 && isWorking)
                 {
                     foreach (var resource in removeResources)

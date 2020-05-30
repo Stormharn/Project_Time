@@ -32,15 +32,18 @@ public class GameManager : MonoBehaviour
         var bunkers = GameObject.FindObjectsOfType<Bunker>();
         if (PopulationManager.Instance.TotalPopulation() == 0 || bunkers.Length == 0)
         {
-            gameOverUI.gameObject.SetActive(true);
-            gameOverUI.GetComponent<GameOverUI>().GameOver(false);
+            GameOver(false);
         }
     }
     #endregion
 
     // Public Methods
     #region Public Methods
-
+    public void GameOver(bool victory)
+    {
+        gameOverUI.gameObject.SetActive(true);
+        gameOverUI.GetComponent<GameOverUI>().GameOver(victory);
+    }
     #endregion
 
     // Private Methods

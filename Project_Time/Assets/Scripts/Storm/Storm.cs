@@ -1,6 +1,6 @@
 using System.Collections;
 using UnityEngine;
-using ProjectTime.Build;
+using ProjectTime.Buildings;
 using ProjectTime.HexGrid;
 using System;
 

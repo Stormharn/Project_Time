@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using ProjectTime.Build;
+using ProjectTime.Buildings;
 using ProjectTime.Resources;
 using ProjectTime.Shielding;
 using ProjectTime.Power;
@@ -15,7 +15,7 @@ namespace ProjectTime.HexGrid
         bool hasResource = false;
         bool hasShield = false;
         bool hasPower = false;
-        Building currentBuilding = null;
+        Buildings.Building currentBuilding = null;
         Resource currentResource = null;
         Shield shield = null;
         List<PowerGenerator> poweredBy = new List<PowerGenerator>();
@@ -24,16 +24,16 @@ namespace ProjectTime.HexGrid
         public bool HasResource { get => hasResource; }
         public bool HasShield { get => hasShield; }
         public bool HasPower { get => hasPower; }
-        public Building CurrentBuilding { get => currentBuilding; }
+        public Buildings.Building CurrentBuilding { get => currentBuilding; }
         public Resource CurrentResource { get => currentResource; }
         public Shield Shield { get => shield; }
 
         private void Start()
         {
             // GetComponent<MeshFilter>().mesh = GameObject.FindObjectOfType<HexMesh>().hexMesh;
-            myCollider = GetComponent<MeshCollider>();
+            // myCollider = GetComponent<MeshCollider>();
 
-            myCollider.sharedMesh = GetComponent<MeshFilter>().mesh;
+            // myCollider.sharedMesh = GetComponent<MeshFilter>().mesh;
         }
 
         private void OnMouseEnter()
@@ -42,18 +42,18 @@ namespace ProjectTime.HexGrid
             gameObject.layer = 9;
         }
 
-        private void OnMouseOver()
-        {
-            if (EventSystem.current.IsPointerOverGameObject() && gameObject.layer != 1)
-                gameObject.layer = 10;
-        }
+        // private void OnMouseOver()
+        // {
+        //     if (EventSystem.current.IsPointerOverGameObject() && gameObject.layer != 1)
+        //         gameObject.layer = 10;
+        // }
 
         private void OnMouseExit()
         {
-            gameObject.layer = 10;
+            gameObject.layer = 0;
         }
 
-        public void AddBuilding(Building newBuilding)
+        public void AddBuilding(Buildings.Building newBuilding)
         {
             isAvailable = false;
             currentBuilding = newBuilding;

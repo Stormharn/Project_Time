@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using ProjectTime.Core;
-using ProjectTime.Build;
+using ProjectTime.Buildings;
 using ProjectTime.Population;
 
 namespace ProjectTime.UI
@@ -44,7 +44,7 @@ namespace ProjectTime.UI
             player.CloseUI();
         }
 
-        internal void DrawGUI(Building targetBuilding)
+        internal void DrawGUI(Buildings.Building targetBuilding)
         {
             nameUI.text = targetBuilding.BuildingName;
             var healthString = targetBuilding.Health.ToString();

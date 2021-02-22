@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
-using ProjectTime.Build;
+using ProjectTime.Buildings;
 using ProjectTime.Core;
 using ProjectTime.Resources;
 

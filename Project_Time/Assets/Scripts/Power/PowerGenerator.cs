@@ -3,7 +3,7 @@ using UnityEngine;
 using ProjectTime.HexGrid;
 using ProjectTime.Core;
 using ProjectTime.Resources;
-using ProjectTime.Build;
+using ProjectTime.Buildings;
 using ProjectTime.Population;
 
 namespace ProjectTime.Power

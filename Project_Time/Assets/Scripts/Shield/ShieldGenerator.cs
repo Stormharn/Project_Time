@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using ProjectTime.Build;
+using ProjectTime.Buildings;
 using ProjectTime.HexGrid;
 using ProjectTime.Resources;
 using ProjectTime.Core;

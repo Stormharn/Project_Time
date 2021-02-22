@@ -1,6 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using ProjectTime.Build;
+using ProjectTime.Buildings;
 using ProjectTime.Population;
 using ProjectTime.Resources;
 using UnityEngine;

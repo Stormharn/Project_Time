@@ -1,4 +1,4 @@
-using ProjectTime.Build;
+using ProjectTime.Buildings;
 
 namespace ProjectTime.Resources
 {

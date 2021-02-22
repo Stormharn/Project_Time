@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
-using ProjectTime.Build;
+using ProjectTime.Buildings;
 using ProjectTime.HexGrid;
 using ProjectTime.UI;
 using ProjectTime.Shielding;
@@ -14,7 +14,6 @@ namespace ProjectTime.Core
         #region Declarations
         [SerializeField] Bunker HQPrefab;
         [SerializeField] Image mainUI;
-        [SerializeField] Image buildUI;
         [SerializeField] Image shieldUI;
         [SerializeField] BuildingSpawner buildingSpawner;
         Image openedPanel;
@@ -29,7 +28,7 @@ namespace ProjectTime.Core
         private void Awake()
         {
             playerCam = Camera.main;
-            previousPanel = mainUI;
+            previousPanel = null;
             activePanel = mainUI;
             mainUI.gameObject.SetActive(true);
         }
@@ -146,8 +145,22 @@ namespace ProjectTime.Core
 
         public void BackUI()
         {
+            if (previousPanel == activePanel)
+            {
+                GoToMainMenu();
+            }
+            else
+            {
+                activePanel.gameObject.SetActive(false);
+                activePanel = previousPanel;
+                activePanel.gameObject.SetActive(true);
+            }
+        }
+
+        public void GoToMainMenu()
+        {
             activePanel.gameObject.SetActive(false);
-            activePanel = previousPanel;
+            activePanel = mainUI;
             activePanel.gameObject.SetActive(true);
         }
         #endregion

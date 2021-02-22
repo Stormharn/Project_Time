@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using ProjectTime.HexGrid;
-using ProjectTime.Build;
+using ProjectTime.Buildings;
 using ProjectTime.Core;
 using ProjectTime.Power;
 using ProjectTime.Population;
